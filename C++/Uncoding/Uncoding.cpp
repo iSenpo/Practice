@@ -19,7 +19,7 @@ string B;
         }
         if(b<len){
             B += A[b];
-        }  
+        } 
     } 
     cout<<B<<endl;
     return B;
