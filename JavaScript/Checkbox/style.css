@@ -1,0 +1,20 @@
+body{
+	background-color: #B17F59;
+	font-size: larger;
+}
+#MySubmit{
+	cursor: pointer;
+	border-radius: 5px;
+	background-color: #B03052;
+	font-size:1.5em;
+	color: #EBE8DB;
+	transition: background-color 0.5s;
+	transition: color .5s;
+}
+#MySubmit:hover{
+	background-color: #3D0301;
+	color: #D76C82;
+}
+label{
+	font-size: 1.5em;
+}
