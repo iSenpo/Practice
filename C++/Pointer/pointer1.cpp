@@ -3,31 +3,38 @@
 
 using namespace std;
 
-int my_strlen(char *s){
-     int length = 0;
-    for(int i =0;s[i] != '\0';i++){
+int my_strlen(char *s)
+{
+    int length = 0;
+    for (int i = 0; s[i] != '\0'; i++)
+    {
         length++;
     }
-     return length;
+    return length;
 }
-void to_uppercase(char *s){
-    for(int i =0;s[i] != '\0';i++){
+void to_uppercase(char *s)
+{
+    for (int i = 0; s[i] != '\0'; i++)
+    {
         s[i] = toupper(s[i]);
     }
 }
-void reverse_string(char *s) {
+void reverse_string(char *s)
+{
     char *left = s;
     char *right = s;
-    while (*right != '\0') {
+    while (*right != '\0')
+    {
         right++;
     }
     right--;
-    while (left < right) {
-        char temp = *left; 
+    while (left < right)
+    {
+        char temp = *left;
         *left = *right;
         *right = temp;
         left++;
-        right--; 
+        right--;
     }
 }
 /* int count_substring(char *s, char *sub) {
@@ -49,29 +56,28 @@ void reverse_string(char *s) {
     }
     return counter;
 } */
-int main(){
-    int n,m;
-    cin>>n;
-    cin>>m; 
+int main()
+{
+    int n, m;
+    cin >> n;
+    cin >> m;
     cin.ignore();
-    char* ptr = new char[n+1];
-    char* sub =new char[m+1];
+    char *ptr = new char[n + 1];
+    char *sub = new char[m + 1];
 
-    cin.get(sub,m+1);
+    cin.get(sub, m + 1);
     cin.ignore();
-   
-    
-    cin.get(ptr,n+1);
-    cout<<my_strlen(ptr)<<"\n";
+
+    cin.get(ptr, n + 1);
+    cout << my_strlen(ptr) << "\n";
 
     to_uppercase(ptr);
-    cout<<ptr<<"\n";
+    cout << ptr << "\n";
 
     reverse_string(ptr);
-    cout<<ptr<<"\n";
+    cout << ptr << "\n";
 
-    //cout<<count_substring(ptr,sub);
+    // cout<<count_substring(ptr,sub);
     delete[] ptr;
     return 0;
-
 }
