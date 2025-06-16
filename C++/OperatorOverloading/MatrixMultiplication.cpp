@@ -60,12 +60,12 @@ int main(){
     Matrix B(row2,col2);
     B.input();
 
-   try {
-    Matrix C = A * B;
-    cout << C;
-} catch (exception& e) {
-    cout << "Error: " << e.what();
-}
+    try{
+        Matrix C = A * B;
+        cout << C;
+    } catch (exception& e) {
+        cout << "Error: " << e.what();
+    }
 
     return 0;
 }

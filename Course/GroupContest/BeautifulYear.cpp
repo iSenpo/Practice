@@ -3,8 +3,6 @@ using namespace std;
 int main(){
     int y;
     cin >> y;
-    
-    
     while(true){
         y++;
         int temp = y;
@@ -25,6 +23,5 @@ int main(){
             break;
         }
     }
-    
 return 0;
 }
