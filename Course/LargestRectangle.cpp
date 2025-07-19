@@ -21,7 +21,7 @@ int main()
             R[i] = n-1;
         }
         else{
-            R[i] = stk.top();
+            R[i] = stk.top() - 1;
         }
         stk.push(i);
     }
@@ -37,7 +37,7 @@ int main()
             L[i] = 0;
         }
         else{
-            L[i] = stk.top();
+            L[i] = stk.top() + 1;
         }
         stk.push(i);
     }
