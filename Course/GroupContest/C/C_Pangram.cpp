@@ -14,17 +14,17 @@ int main(){
     for(int i = 0 ; i < 26 ; i++){
         letter[i] = true;
     }
-    int j = 0;
+
     for(int i = 0 ; i < 26 ;i++){
         char temp = 'a' + i;
         char temp2 = 'A' + i;
         for(int k = 0 ; k < n ; k++){
             if(s[k] == temp || s[k] == temp2){
-                letter[j] = false;
-                j++;
+                letter[i] = false;
             }
         }
     }
+
     for(int i = 0; i<min(n,26) ; i++){
         if(letter[i]){
             cout<<"NO";
