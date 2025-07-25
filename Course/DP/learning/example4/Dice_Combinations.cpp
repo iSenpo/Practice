@@ -1,12 +1,12 @@
-//Dice Combinations 1634
+//https://cses.fi/problemset/task/1633
 #include <bits/stdc++.h>
 using namespace std;
-typedef long long ll;
+
 const int N  = 1e6 + 500;
 const int MOD = 1e9 + 7;
 
-ll dp[N];
-int Dice(int i){
+vector<unsigned long long> dp(N , -1);
+unsigned long long Dice(long long i){
     //base : 
     if(i < 0){
         return 0;
@@ -19,15 +19,13 @@ int Dice(int i){
     }
     dp[i] = 0;
     for(int k = 1; k <= 6 ; k++){
-        dp[i] += Dice(i - k)%MOD;
-        dp[i] %= MOD;
+        dp[i] = (dp[i] + Dice(i - k)) % MOD ;
     }
     return dp[i];
 }
 int main(){
-    int n;
+    long long n;
     cin >> n;
-    memset(dp , -1 , N);
-    cout << Dice(n); 
+    cout << Dice(n);
     return 0;
 }

@@ -1,38 +1,35 @@
 #include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
-const int N  = 1e5 + 500;
+const int N  = 1e6 + 500;
+const int MOD = 1e9 + 7;
+ll n,x;
+ll a[N];
+vector<ll> dp(N , -1);
 
-int n,x;
-int a[N];
-int dp[N];
-
-int coin(int i){
+ll coin(int i){
     //base :
     if(i == 0){
-        return 0;
+        return 1;
     }
     if(i < 0 || n == 0){
-        return 1;
+        return 0;
     }
     //dp :
     if(dp[i] != -1){
         return dp[i];
     }
     dp[i] = 0;
-    for(int j = 0; j<n ; j++){
-        dp[i] += dp[i - a[j]];
+    for(ll j = 0; j<n ; j++){
+        dp[i] = (dp[i] + coin(i - a[j])) % MOD;
     }
     return dp[i];
 }
 int main(){
     cin >> n >> x; 
-    for(int i = 0 ; i < n ; i++){
+    for(ll i = 0 ; i < n ; i++){
         cin >> a[i];
     }
-    sort(a , a+n);
-    memset(dp , -1 , sizeof(dp));
-
     cout << coin(x);
     return 0;
 }
