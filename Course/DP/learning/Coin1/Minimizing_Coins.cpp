@@ -3,12 +3,14 @@
 using namespace std;
 typedef long long ll;
 const int N  = 1e6 + 500;
+
 int Maxx = 2e9;
 int n;
 vector<int> dp(N,-1);
 int a[N];
 
-int Coin(int i){
+//recursive solution :
+int solve1(int i){
     //base :
     if(i == 0){
         return 0;
@@ -22,17 +24,22 @@ int Coin(int i){
     }
     int res = Maxx;
     for(int j = 0; j < n ; j++){
-        res = min( res , Coin(i - a[j]) + 1 );
+        res = min( res , solve1(i - a[j]) + 1 );
     }
     return dp[i] = res;
 } 
+
+//iterative solution :
+int solve2(int x){
+    
+}
 int main(){
     int x;
     cin >> n >> x;
     for(int i = 0 ; i < n ; i++){
         cin >> a[i];
     }
-    int ans = Coin(x);
+    int ans = solve1(x);
     if(ans == Maxx){
         cout << -1 ;
     }
