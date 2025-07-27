@@ -7,29 +7,47 @@ ll n,x;
 ll a[N];
 vector<ll> dp(N , -1);
 
-ll coin(int i){
+//Recursive Solution :
+ll solve1(ll x){
     //base :
-    if(i == 0){
+    if(x == 0){
         return 1;
     }
-    if(i < 0 || n == 0){
+    if(x < 0 || n == 0){
         return 0;
     }
-    //dp :
-    if(dp[i] != -1){
-        return dp[i];
+    //transition :
+    if(dp[x] != -1){
+        return dp[x];
     }
-    dp[i] = 0;
-    for(ll j = 0; j<n ; j++){
-        dp[i] = (dp[i] + coin(i - a[j])) % MOD;
+    dp[x] = 0;
+    for(ll i = 0; i < n ; i++){
+        dp[x] = (dp[x] + solve1(x - a[i])) % MOD;
     }
-    return dp[i];
+    return dp[x];
+}
+
+//Iterative Solution :
+ll solve2(ll x){
+    //base :
+    dp[0] = 1;
+
+    //transition :
+    for(int i = 1 ; i <= x ; i++){
+        dp[i] = 0;
+        for(int j = 0; j < n; j++){
+            if(a[j] <= i){
+                dp[i] = (dp[i] + dp[i - a[j]]) % MOD;
+            }
+        }
+    }
+    return dp[x];
 }
 int main(){
     cin >> n >> x; 
     for(ll i = 0 ; i < n ; i++){
         cin >> a[i];
     }
-    cout << coin(x);
+    cout << solve1(x) << "\n" << solve2(x);
     return 0;
 }

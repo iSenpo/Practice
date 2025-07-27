@@ -6,10 +6,10 @@ const int N  = 1e6 + 500;
 
 int Maxx = 2e9;
 int n;
-vector<int> dp(N,-1);
+vector<int> dp(N,N);
 int a[N];
 
-//recursive solution :
+//Recursive Solution :
 int solve1(int i){
     //base :
     if(i == 0){
@@ -18,8 +18,8 @@ int solve1(int i){
     if(i < 0){
         return Maxx;
     }
-    //dp:
-    if(dp[i] != -1){
+    //transition :
+    if(dp[i] != N){
         return dp[i];
     }
     int res = Maxx;
@@ -29,9 +29,20 @@ int solve1(int i){
     return dp[i] = res;
 } 
 
-//iterative solution :
+//Iterative Solution :
 int solve2(int x){
-    
+    //base :
+    dp[0] = 0;
+
+    //transition :
+    for(int i = 0; i <= x ; i++){
+        for(int j = 0; j < n; j++){
+            if(a[j] <= i){
+                dp[i] = min(dp[i] , dp[i - a[j]] + 1);
+            }
+        }
+    }
+    return dp[x];
 }
 int main(){
     int x;
@@ -44,7 +55,7 @@ int main(){
         cout << -1 ;
     }
     else{
-        cout << ans;
+        cout << solve1(x) << endl << solve2(x);
     }
     return 0;
 }
