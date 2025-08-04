@@ -6,7 +6,6 @@ const int MOD = 1e9 + 7;
 ll n,x;
 ll a[N];
 vector<ll> dp(N , -1);
-
 //Recursive Solution :
 ll solve1(ll x){
     //base :
