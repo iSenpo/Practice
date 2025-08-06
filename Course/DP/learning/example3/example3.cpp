@@ -10,9 +10,15 @@ int dp[N];
 int MaxSum(int i){
     //base!!!!!! :
     if(i == 0){
+        if(a[i] < 0)
+            dp[i] = 0;
         return dp[i] = a[0];
     }
     if(i == 1){
+        if(a[i] < 0){
+            
+        }
+            dp[i] = 0;
         return dp[i] = max(a[0] , a[1]);
     }
     //dp :
