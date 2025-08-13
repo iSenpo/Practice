@@ -6,7 +6,7 @@ using namespace std;
 const int N  = 1e5 + 500;
 vector<int> adj[N];
 int diameter[N];
-int DpDown[N];
+int DownPath[N];
 
 
 void input(){
@@ -36,20 +36,20 @@ void input(){
 }
 int DownDP(int v){
     if(adj[v].empty()){
-        return DpDown[v] = 0;
+        return DownPath[v] = 0;
     }
     int BestChild = 0;
     for(int i : adj[v]){
         BestChild = max(BestChild , DownDP(i));
     }
-    return DpDown[v] = BestChild + 1;
+    return DownPath[v] = BestChild + 1;
 }
 void Diameter(int v){
     int ans = 0;
     vector<int> edges;
     for(int i : adj[v]){
         Diameter(i);
-        edges.push_back(DpDown[i]);
+        edges.push_back(DownPath[i]);
         ans = max(ans , diameter[i]);
     }
     if(edges.empty()){
