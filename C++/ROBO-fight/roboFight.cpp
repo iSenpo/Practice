@@ -5,6 +5,7 @@ using namespace std;
 
 class Robot;
 class RoboLine;
+
 class Robot{
     private:
     char ID;
@@ -76,8 +77,8 @@ class RoboLine{
     RoboLine(int length,int num_robots):line(length),num_robots(num_robots){
         Robot::LineLength = length;
         Robot::RobotCounter = num_robots;
+        Ring.resize(length , nullptr);
         Robots.resize(num_robots);
-        Ring.resize(length,nullptr);
 
         int i = 0;
         int random;
@@ -119,17 +120,18 @@ class RoboLine{
         }
     }
     void ShowFight(){
-         for(int i = 0 ; i < line; i++){
+        for(int i = 0 ; i < line; i++){
             if(Ring[i]){
-                if(!(Ring[i]->isDead()))
-                    {cout << *Ring[i];}
+                if(!(Ring[i]->isDead())){
+                    cout << *Ring[i];
+                }
             }
             else{
                 cout << " _ ";
             }
         }
     }
-    void DestryRobots(){
+    void DestroyRobots(){
         for(int i = 0 ; i < num_robots ; i++){
             delete Robots[i];
         }
@@ -146,6 +148,6 @@ int main(){
         getline(cin,temp);
     }
     ob.ShowFight();
-    ob.DestryRobots();
+    ob.DestroyRobots();
     return 0;
 }

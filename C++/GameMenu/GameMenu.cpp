@@ -105,7 +105,7 @@ int main(){
     int counter;
 
     for(int i=0 ; i < n ; i++){
-        Characters[i]= CharacterFactory::CreateCharacter();
+        Characters[i] = CharacterFactory::CreateCharacter();
         counter++;
     }
         bool loop = true;
@@ -127,13 +127,13 @@ int main(){
                 case 2 :
                     for(int i=0 ; i<counter; i++){
                         Combatant* e = dynamic_cast<Combatant*>(Characters[i]);
-                    if (e) e->attack();
+                        e->attack();
                     }
                 break;
                 case 3 :
                     for(int i=0 ; i<counter; i++){
-                    Combatant* e = dynamic_cast<Combatant*>(Characters[i]);
-                    if (e) e->defend();
+                        Combatant* e = dynamic_cast<Combatant*>(Characters[i]);
+                        e->defend();
                     }
                 break;
                 case 4 :
