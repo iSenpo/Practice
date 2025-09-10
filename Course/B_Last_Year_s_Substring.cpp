@@ -2,11 +2,8 @@
 using namespace std;
 #define ll long long
 #define ln '\n'
-#define fo(i, n) for(int i = 0 ; i < n ; i++)
-int MOD = 1e9 + 7;
-const int N  = 1e5 + 500;
-int arr[N];
 
+//my solve :(
 void solve()
 {
     int n;
@@ -37,6 +34,25 @@ void solve()
     cout << "NO\n";
     return;
 }
+//Rank1 :
+int input(){
+    int x;
+    cin >> x;
+    return x;
+}
+void solve2(){
+    int n = input();
+    string s;
+    cin >> s;
+    const string t = "2020";
+    bool check = false;
+    for(int i = 0 ; i < 4 ; i++){
+        if(s.substr(0 , i) == t.substr(0 , i) && s.substr(n-4+i) == t.substr(i)){
+            check = true;
+        }
+    }
+    cout << (check ? "YES\n" : "NO\n");
+}
 int main(){
     ios::sync_with_stdio(false);
     cin.tie(NULL);
@@ -44,7 +60,7 @@ int main(){
     int t;
     cin >> t;
     while(t--){
-        solve();
+        solve2();
     }
     return 0;
 }
