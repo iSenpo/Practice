@@ -18,13 +18,7 @@ void solve()
     int n = in();
     string s;
     cin >> s;
-    int ctr1 = 0;
     int ctr0 = 0;
-    for(int i = 0 ; i < n ; i++){
-        if(s[i] == '1'){
-            ctr1++;
-        }
-    }
     for(int i = 0 ; i < n ; i++){
         if(s[i] == '0'){
             ctr0++;
@@ -38,13 +32,28 @@ void solve()
     }
     cout << ans << ln;
 }
+//solution 2 : compare with sorted array than divide by 2 :
+void solve2(){
+    int n = in();
+    string s;
+    cin >> s;
+    int ans = 0;
+    string p = s;
+    sort(all(p));
+    for(int i = 0 ; i < s.size() ; i++){
+        if(s[i] != p[i]){
+            ans++;
+        }
+    }
+    cout << ans / 2 << ln;
+}
 int main(){
     ios::sync_with_stdio(false);
     cin.tie(NULL);
     /*------------------------------------*/
     int t = in();
     while(t--){
-        solve();
+        solve2();
     }
     return 0;
 }
