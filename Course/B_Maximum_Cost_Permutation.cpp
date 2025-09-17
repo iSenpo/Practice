@@ -2,7 +2,7 @@
 using namespace std;
 #define ll long long
 #define ln '\n'
-#define fo(i, n) for(int i = 0 ; i < n ; i++)
+#define fo(i, n) for(int i = 1 ; i <= n ; i++)
 #define all(x) (x).begin(),(x).end()
 int MOD = 1e9 + 7;
 const int N  = 1e5 + 500;
@@ -17,64 +17,62 @@ void solve()
 {
     int n = in();
     int a[n + 1];
-    vector<pair<int,int>> v;
-    vector<int> s(n + 1);
-    s[0] = 0;
-    vector<bool> p(n + 1,false);
-    for(int i = 1 ; i <= n ; i++){
-        cin >> a[i];
-        p[a[i]] = true;
-        s[i] = i;
-    }
-    sort(all(s));
-    vector<int> m;
-    for(int i = 1 ; i <= n ; i++){
-        if(!p[i]){
-            m.push_back(i);
-        }
-    }
-    for(int i = 1 ; i <= n ; i++){
-        pair<int , int> Max;
-        int dis = 0;
-        if(a[i] == 0){
-            for(int j : m){
-                if(j > a[i]){
-                    if(dis < j - i){
-                        dis = j - i;
-                        Max = {i , j};
-                    }
-                }
-                else{
-                    if(dis < i - j){
-                        dis = i - j;
-                        Max = {j , i};
-                    }
-                }
-            }
-        }
-        else if(a[i] != s[i]){
-            if(a[i] > i){
-                Max = {i , a[i]};
-            }
-            else{
-                Max = {a[i] , i};
-            }
-        }
-        v.push_back(Max);
-    }
+    vector<int> mis;
     vector<bool> mark(n + 1, false);
-    for(auto i : v){
-        for(int j = i.first ; j <= i.second ; j++){
-            mark[j] = true;
+    fo(i , n) {
+        cin >> a[i];
+        mark[a[i]] = true;
+    }
+    fo(i , n){
+        if(!mark[i]){
+            mis.push_back(i);
         }
     }
-    int ans = 0;
-    for(int i = 1 ; i <= n ; i++){
-        if(mark[i]){
-            ans++;
+    int l = 0;
+    int r = 0;
+    fo(i , n){
+        if(a[i] == 0){
+            bool exit = false;
+            for(int j : mis){
+                if(i != j){
+                    l = i;
+                    exit = true;
+                    break;
+                }
+            }
+            if(exit){
+                break;
+            }
+        }
+        else if(a[i] != i){
+            l = i;
+            break;
         }
     }
-    cout << ans << ln;
+    for(int i = n ; i > 0 ; i--){
+        if(a[i] == 0){
+            bool exit = false;
+            for(int j : mis){
+                if(i != j){
+                    r = i;
+                    exit = true;
+                    break;
+                }
+            }
+            if(exit){
+                break;
+            }
+        }
+        else if(a[i] != i){
+            r = i;
+            break;
+        }
+    }
+    if(r == l){
+        cout << 0 << ln;
+        return;
+    }
+    cout << r - l + 1<< ln;
 }
 int main(){
     ios::sync_with_stdio(false);
