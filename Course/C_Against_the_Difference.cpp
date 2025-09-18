@@ -20,12 +20,14 @@ void solve()
     fo(i , n) cin >> a[i];
     int ans = 0;
     int temp;
-    fo(i , n){
+    int i = 0;
+    while(i < n){
         if(a[i] == 1){
             ans++;
+            i++;
             continue;
         }
-        int pr = i;
+        int pr = i + 1;
         bool block = true;
         int k = a[i];
         while(--k){
@@ -36,6 +38,9 @@ void solve()
         }
         if(block && k == 0){
             ans += a[i];
+        }
+        else{
+            pr--;
         }
         i = pr;
     }
