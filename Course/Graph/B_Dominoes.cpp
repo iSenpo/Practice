@@ -1,57 +1,84 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const int N  = 1e2 + 500;
-vector<int> adj[N] , ind[N] , ans;
-bool mark[N];
+const int N = 7;
+const int M = 1e2 + 10;
+vector<int> ind[N];
+pair<int , int> edg[M];
+vector<pair<int , char>> ans;
 int ptr[N];
+bool mark[M];
 
-void tour(int v){
-    while(ptr[v] < adj[v].size()){
-        int u = adj[v][ptr[v]];
-        int index = ind[v][ptr[v]];
+inline int in(){
+    int x;
+    cin >> x;
+    return x;
+}
+
+void tour(int v, int i){
+    while(ptr[v] < ind[v].size()){
+        //find edge : 
+        int e = ind[v][ptr[v]];
+        //find u :
+        int u = edg[e].first;
+        if(u == v)
+            u = edg[e].second;
+        //~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ 
         ptr[v]++;
-        if(!mark[index]){
-            mark[index] = true;
-            tour(u);
+        if(!mark[e]){
+            mark[e] = true;
+            tour(u , e);
         }
     }
-    ans.push_back(v);
+    if(i != -1){
+        pair<int , int> e = edg[i];
+        if(e.first == v){
+            ans.push_back({i , '+'});
+        }
+        else{
+            ans.push_back({i , '-'});
+        }
+    }
 }
+
 int main(){
     ios::sync_with_stdio(false);
     cin.tie(NULL);
     /*------------------------------------*/
-    int n;
-    pair<int , int> domino[n];
+    int n = in();
+    int v , u;
     for(int i = 0 ; i < n ; i++){
-        int v , u;
         cin >> v >> u;
-        v-- ; u--;
-        adj[u].push_back(v);
-        adj[v].push_back(u);
-        ind[u].push_back(i);
         ind[v].push_back(i);
-        domino[i] = {v , u};
+        ind[u].push_back(i);
+        edg[i] = {v , u};
     }
-    tour(0);
-    for(int i = 0 ; i < ans.size() - 1 ; i+=2){
-        int v = ans[i];
-        int u = ans[i+1];
-        for(int j = 0 ; j < n ; j++){
-            if(v == domino[j].first && u == domino[j].second){
-                cout << j + 1 << '+' << endl;
-                domino[j].first = 0;
-                domino[j].second = 0;
-                break;
-            }
-            if(u == domino[j].first && v == domino[j].second){
-                cout << j + 1 << '-' << endl;
-                domino[j].first = 0;
-                domino[j].second = 0;
-                break;
+    int odd = 0;
+    int ctr = 0;
+    for(int i = 0; i < N ; i++){
+        if(ind[i].size() % 2 == 1){
+            odd = i;
+            ctr++;
+        }
+    }
+    if(ctr > 2){
+        cout << "No solution\n";
+        return 0;
+    }
+    if(ind[odd].size() % 2 == 0){
+        for(int i = 0 ; i < N ; i++){
+            if(ind[i].size() > 0){
+                odd = i;
             }
         }
+    }
+    tour(odd , -1);
+    if(ans.size() < n){
+         cout << "No solution\n";
+        return 0;
+    }
+    for(int i = 0 ; i < ans.size() ; i++){
+        cout << ans[i].first + 1 << ' ' << ans[i].second << '\n'; 
     }
     return 0;
 }
