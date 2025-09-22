@@ -2,8 +2,10 @@
 using namespace std;
 
 const int N = 1e5;
-const int M = N;
-vector<int> adj[N] , ind[N] , ans;
+const int M = 1e5;
+vector<int> adj[N];
+vector<int> ind[N];
+vector<int> ans;
 int ptr[N];
 bool mark[M];
 
