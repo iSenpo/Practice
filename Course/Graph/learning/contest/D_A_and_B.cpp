@@ -2,9 +2,15 @@
 using namespace std;
 #define ll long long
 #define ln '\n'
-#define fo(i, n) for(int i = 0 ; i < n ; i++)
+#define fo(i, n) for(int i = 0 ; i < n ; ++i)
 #define all(x) (x).begin(),(x).end()
+#define sz(x) (int)(x).size()
+#define pb(x) push_back(x)
+// 48-57 -> 0-9  65-90 -> A-Z 97-122 -> a-z
+const int dx[8] = {1, 0, -1, 0, 1, 1, -1, -1};
+const int dy[8] = {0, 1, 0, -1, -1, 1, -1, 1};
 int MOD = 1e9 + 7;
+
 const int N  = 1e5 + 500;
 int arr[N];
 
@@ -18,30 +24,24 @@ void solve()
     int n = in();
     string s;
     cin >> s;
-    int fb = 0;
-    int lb = 0;
-    bool ext = true;
-    fo(i, n){
-        if(s[i] == 'b'){
-            lb = i;
-            if(ext){
-                fb = i;
-                ext = false;
+    ll ans = LLONG_MAX;
+    for(char target : {'a' , 'b'}){
+        vector<int> positions;
+        for(int i = 0 ; i < n ; ++i){
+            if(s[i] == target){
+                positions.pb(i);
             }
         }
-    }
-    int p2 = fb + 1;
-    int ans = 0;
-    for(int p1 = fb ; p1 < lb ; p1++){
-        if(s[p1] == 'a'){
-            while(s[p2] == 'a'){
-                p2++;
-            }
-            ans += p2 - p1;
-            swap(s[p1] , s[p2]);
-            p1 = p2;
+        if(positions.empty()){
+            cout << 0 << ln;
+            return;
         }
-        p2++;
+        int mid  = positions[sz(positions)/2];
+        ll cur = 0;
+        for(int i = 0 ; i < sz(positions) ; ++i){
+            cur += abs(mid - sz(positions)/2 + i - positions[i]);
+        }
+        ans = min(ans , cur);
     }
     cout << ans << ln;
 }
