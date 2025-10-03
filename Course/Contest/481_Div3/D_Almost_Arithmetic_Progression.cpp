@@ -7,12 +7,9 @@ using namespace std;
 #define sz(x) (int)(x).size()
 #define pb(x) push_back(x)
 // 48-57 -> 0-9  65-90 -> A-Z 97-122 -> a-z
-const int dx[8] = {1, 0, -1, 0, 1, 1, -1, -1};
-const int dy[8] = {0, 1, 0, -1, -1, 1, -1, 1};
-int MOD = 1e9 + 7;
 
-const int N  = 1e5 + 500;
-int arr[N];
+
+const int N  = 1e8;
 
 inline int in(){
     int x;
@@ -22,36 +19,39 @@ inline int in(){
 void solve()
 {
     int n = in();
+    int a[n];
+    int ans = N;
+    fo(i , n) cin >> a[i];
     if(n <= 2){
-        cout << 0 <<ln;
+        cout << 0 << ln;
         return;
     }
-    ll a[n];
-    fo(i , n) cin >> a[i];
-    ll sum = 0;
-    ll ans = 0;
-    fo(i , n - 1){
-        sum += abs(a[i + 1] - a[i]);
+    else{
+        for(int i : {-1 , 0 , 1}){
+            for(int j : {-1 , 0 , 1}){
+                int a0 = a[0] + i;
+                int a1 = a[1] + j;
+                int diff = a1 - a0;
+                int cnt = abs(i) + abs(j);
+                int prev = a1;
+                for(int k = 2 ; k < n ; ++k){
+                    int next = prev + diff;
+                    if(abs(next - a[k]) == 1){
+                        cnt++;
+                    }
+                    else if(abs(next - a[k]) > 1){
+                        cnt = N;
+                        break;
+                    }
+                    prev = next;
+                }
+                ans = min(ans , cnt);
+            }
+        }
     }
-    sum++;
-    sum /= (n-1);
-    fo(i , n){
-        if(sum - abs(a[i + 1] - a[i]) > 2){
-            cout << -1;
-            return;
-        }
-        if(sum - abs(a[i + 1] - a[i]) == 2){
-            a[i + 1]--;
-            a[i]++;
-            i++;
-            ans += 2;
-            continue;
-        }
-        if(sum - abs(a[i + 1] - a[i]) == 1){
-            a[i]++;
-            ans++;
-            continue;
-        }
+    if(ans == N){
+        cout << -1 << ln;
+        return;
     }
     cout << ans << ln;
 }
