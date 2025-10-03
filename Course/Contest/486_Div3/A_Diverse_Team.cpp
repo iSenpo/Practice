@@ -37,8 +37,8 @@ void solve()
     }
     if(cnt >= k){
         cout << "YES\n";
-        for(int i : print){
-            cout << i << ' ';
+        for(int i = 0 ; i < k ;++ i){
+            cout << print[i] << ' ';
         }
     }
     else{
