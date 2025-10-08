@@ -56,7 +56,7 @@ int main(){
     for(int i = 0 ; i < n + 1 ; i++){
         dp[i][0] = 1;
     }
-    //cout << solve1(1 , x)<<endl;
-    cout << solve2();
+    cout << solve1(1 , x)<<endl;
+    //cout << solve2();
     return 0;
 }

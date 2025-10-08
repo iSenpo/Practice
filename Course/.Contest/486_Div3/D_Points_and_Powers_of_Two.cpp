@@ -14,59 +14,51 @@ const int dy[8] = {0, 1, 0, -1, -1, 1, -1, 1};
 int MOD = 1e9 + 7;
 
 const int N  = 1e5 + 500;
-int arr[N];
 
 inline int in(){
     int x;
     cin >> x;
     return x;
 }
+
 void solve()
 {
     int n = in();
-    vector<ll> odd;
-    vector<ll> even;
-    ll x;
+    int a[n];
+    fo(i , n) cin >> a[i];
+    sort(a , a + n);
+    vector<int> ans(3);
     fo(i , n){
-        cin >> x;
-        if(x%2){
-            odd.pb(x);
-        }
-        else{
-            even.pb(x);
-        }
-    }
-    sort(all(odd));
-    sort(all(even));
-    bool one = false;
-    bool two = false;
-    bool three = false;
-    int ptr = 0;
-    vector<int> ans;
-    for(int i = 0 ; i < odd.size() - 2 ; ++i){
-        if((odd[i] + odd[i + 1] + odd[i + 2]) / 3 == odd[i + 1]){
-            three = true;
-            ans.pb(odd[i]);
-            ans.pb(odd[i + 1]);
-            ans.pb(odd[i + 2]);
-            break;
+        fo(j , 31){
+            int l = a[i] - (1 << j);
+            int r = a[i] + (1 << j);
+            bool left = binary_search(a , a + n , l);
+            bool right = binary_search(a , a + n , r);
+            if(left && right){
+                cout << 3 << ln;
+                cout << (int)l << ' ' << (int)a[i] << ' ' << (int)r << ln;
+                return;
+            }
+            if(left){
+                ans = {l , a[i]};
+            }
+            if(right){
+                ans = {a[i] , r};
+            }
         }
     }
-    if(three){
-        cout << 3 << ln;
-        for(int i : ans)
-            cout << i << ' ';
+    if(sz(ans) == 2){
+        cout << 2 << ln;
+        cout << (int)ans[0] << ' ' << (int)ans[1] << ln;
         return;
     }
-    for(int i = 0 ; i < odd.size() - 1 ; ++i){
-        if((odd[i] + odd[i + 1] + odd[i + 2]) / 3 == odd[i + 1]){
-            three = true;
-            ans.pb(odd[i]);
-            ans.pb(odd[i + 1]);
-            ans.pb(odd[i + 2]);
-            break;
+    fo(i , 31){
+        if(binary_search(a , a + n , (1 << i))){
+            cout << 1 << ln << (int)(1 << i) << ln;
+            return;
         }
     }
+    cout << 1 << ln << a[0] << ln;
 }
 int main(){
     ios::sync_with_stdio(false);
