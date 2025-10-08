@@ -8,53 +8,73 @@ using namespace std;
 #define pb(x) push_back(x)
 #define mt(x , y , z) make_tuple(x , y , z)
 
-// 48-57 -> 0-9  65-90 -> A-Z 97-122 -> a-z
-const int dx[8] = {1, 0, -1, 0, 1, 1, -1, -1};
-const int dy[8] = {0, 1, 0, -1, -1, 1, -1, 1};
-int MOD = 1e9 + 7;
 
-const int N  = 1e5 + 500;
-int arr[N];
+const int INF = 1e8;
+int d[10];
 
-inline int in(){
-    int x;
-    cin >> x;
-    return x;
+void recount(string s){
+    memset(d , 0 , sizeof d);
+    fo(i , sz(s)){
+        d[s[i] - '0']++;
+    }
+}
+int solver(string t, char c1 , char c2){
+    recount(t);
+    if(d[c1-'0']){d[c1-'0']--;}
+    else{return INF;}
+    if(d[c2-'0']){d[c2-'0']--;}
+    else{ return INF;}
+    int ans = 0;
+    for(int i = 0 ; i < t.size() ;i++){
+        if(t[i] == c1){
+            int k = i;
+            while(k != 0){
+                ans++;
+                swap(t[k] , t[k - 1]);
+                k--;
+            }
+            break;
+        }
+    }
+    for(int i = 1 ; i < t.size() ; i++){
+        if(t[i] == c2){
+            int k = i;
+            while(k != 1){
+                ans++;
+                swap(t[k] , t[k -1]);
+                k--;
+            }
+            break;
+        }
+    }
+    if(t[t.size() - 1] != '0'){ return ans;}
+    bool non = true;
+    int k = t.size() - 1;
+    while(k > 1){
+        if(t[k] != '0'){
+            ans += t.size() - k - 1;
+            non = false;
+            break;
+        }
+        k--;
+    }
+    if(non){return INF;}
+    else{
+        return ans;
+    }
 }
 void solve()
 {
     string s;
     cin >> s;
-    vector<int> ind0;
-    vector<int> ind5;
-    vector<int> ind2;
-    fo(i , sz(s)){
-        if(s[i] == '0'){
-            ind0.pb(i);
-        }
-        if(s[i] == '5'){
-            ind5.pb(i);
-        }
-        if(s[i] == '2' || s[i] == '7'){
-            ind2.pb(i);
-        }
-    }
-    sort(all(ind0));
-    sort(all(ind5));
-    sort(all(ind2));
-    if(ind5.empty() && sz(ind0) < 2){
-        cout << -1;
-        return;
-    }
-    if(ind0.empty() && ind2.empty()){
-        cout << -1;
-        return;
-    }
-    if(ind2.empty() && ((ind0.size() < 2) || (ind5.empty()))){
-        cout << -1;
-        return;
-    }
-    
+    reverse(all(s));
+    int Min = INF;
+    Min = min(Min , solver(s ,'0' , '0')); 
+    Min = min(Min , solver(s ,'0' , '5')); 
+    Min = min(Min , solver(s ,'5' , '2')); 
+    Min = min(Min , solver(s ,'5' , '7')); 
+   
+    cout << (Min == INF ? -1 : Min) << ln; 
 }
 int main(){
     ios::sync_with_stdio(false);
