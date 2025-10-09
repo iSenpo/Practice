@@ -7,16 +7,6 @@ using namespace std;
 #define all(x) (x).begin(),(x).end()
 #define sz(x) (ll)(x).size()
 #define pb(x) push_back(x)
-#define mt(x , y , z) make_tuple(x , y , z)
-
-// 48-57 -> 0-9  65-90 -> A-Z 97-122 -> a-z
-
-const ll dx[8] = {1, 0, -1, 0, 1, 1, -1, -1};
-const ll dy[8] = {0, 1, 0, -1, -1, 1, -1, 1};
-ll MOD = 1e9 + 7;
-
-const ll N  = 2e5 + 10;
-//always check input!!!
 
 void solve()
 {
@@ -24,30 +14,36 @@ void solve()
     cin >> n >> k;
     ll a[n];
     ll m = n / k;
-    vector<ll> inp(k , 0);
+    vector<ll> cnt(k , 0);
     vector<ll> fre;
+    vector<vector<int>> input(k);
     fo(i , n){
         cin >> a[i];
         ll j = a[i] % k;
-        if(inp[j] >= m){
-            fre.pb(i);
-        }
-        else{
-            inp[j]++;
-        }
+        cnt[j]++;
+        input[j].pb(i);
     }
     ll ans = 0;
-    for(ll i = 0 ; i < k ; i++){
-        while(inp[i] < m){
-            ll index = fre.back();
-            fre.pop_back();
-            ll r = a[index] % k;
-            ll inc = (i - r + k) % k;
-            a[index] += inc;
-            ans += inc;
-            inp[i]++;
+    for(int p : {1 , 2}){
+        fo(i , k){
+            while(cnt[i] > m){
+                cnt[i]--;
+                int ind = input[i].back();
+                input[i].pop_back();
+                fre.pb(ind);
+            }
+            while(cnt[i] < m && !fre.empty()){
+                cnt[i]++;
+                int j = fre.back();
+                fre.pop_back();
+                ll r = a[j] % k;
+                ll inc = (i - r + k) % k;
+                a[j] += inc;
+                ans += inc;
+            }
         }
     }
+    
     cout << ans << ln;
     for(ll i = 0 ; i < n ; i++){
         cout << a[i] << ' ';
@@ -56,6 +52,7 @@ void solve()
 int main(){
     ios::sync_with_stdio(false);
     cin.tie(NULL);
+    cout.tie(NULL);
     /*------------------------------------*/
     ll t = 1;
     //cin >> t;
