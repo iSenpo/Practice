@@ -20,46 +20,40 @@ const int N  = 2e5 + 10;
 
 void solve()
 {
-    int n , k;
-    cin >> n >> k;
-    int a[n];
-    fo(i , n) cin >> a[i];
-    vector<int> t(a , a + n);
-    sort(all(t));
-    vector<int> v;
-    ll sum = 0;
-    for(int i = n - k; i < n ; i++){
-        v.pb(t[i]);
-        sum += t[i];
-    }
-    cout << sum << ln;
-    int cnt = 0;
-    int i = 0;
-    int last = 0;
-    int snt = 0;
-    for(int j = 0 ; j < v.size() - 1 ; j++){
-        cnt++;
-        if(i >= n){
+    int c=0,e;
+    int d=0;
+    string s;
+    cin >> s;
+    fo(i,sz(s)){
+        if(s[i] == '0'){
+            e = i+1;
+            for(int j=i;j<sz(s);j++){
+                if(s[j]=='1'){
+                    break;
+                }
+                d++;
+            }
             break;
         }
-        while(a[i] != v[j] && i < n){
-            cnt++;
-            i++;
-        }
-        cout << cnt << ' ';
-        snt += cnt;
-        cnt = 0;
-        last = snt;
-        i++;
+        c++;
     }
-    cout << n - last << ' ';
+    if(d>c){
+        d = c;
+    }
+    if(c == sz(s)){
+        cout << 1 << " " << sz(s) << " " << 1 << " " << 1 << endl;
+
+    }else {
+        cout << 1 << " " << sz(s) << " " << e-d << " " << sz(s)-d << endl;
+    }
+    
 }
 int main(){
     ios::sync_with_stdio(false);
     cin.tie(NULL);
     /*------------------------------------*/
     int t = 1;
-    //cin >> t;
+    cin >> t;
     while(t--){
         solve();
     }
