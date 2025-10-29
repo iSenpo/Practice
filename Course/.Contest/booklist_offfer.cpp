@@ -20,34 +20,22 @@ const int N  = 2e5 + 10;
 
 void solve()
 {
-    ll y , x;
-    cin >> y >> x;
-    unsigned long long n;
-    if(x < y){
-        if(y%2 == 0){
-            n = y * y;
-            x--;
-            n -= x;
-        }
-        else{
-            n = (y - 1) * (y - 1) + 1;
-            x--;
-            n += x;
-        }
+    int n;
+    cin >> n;
+    int a[n];
+    fo(i,n){
+        cin >> a[i];
     }
-    else{
-        if(x%2 == 0){
-            n = (x - 1) * (x - 1) + 1;
-            y--;
-            n += y;
+    sort(a,a+n);
+    reverse(a,a+n);
+    ll ans = a[0];
+    for(int i = 1 ; i < n ; i++){
+        if((i + 1) %3 == 0){
+            continue;
         }
-        else{
-            n = x * x;
-            y--;
-            n -= y;
-        }
+        ans += a[i];
     }
-    cout << n << ln;
+    cout << ans << ln;
 }
 int main(){
     ios::sync_with_stdio(false);
