@@ -22,33 +22,30 @@ void solve()
 {
     string s , t;
     cin >> s >> t;
-    int n = sz(s);
-    int a[n];
-    fo(i , n){
-        if(s[i] == '0' && t[i] == '0'){
-            a[i] = 0;
+    int ns = sz(s) , nt = sz(t);
+    int cnt = 0;
+    int Max = 0;
+    for(int i = 0 ; i < ns - nt + 1 ; i++){
+        if(s.substr(i , nt) == t){
+            int side = max(cnt , ns - nt - cnt);
+            Max = max(Max , side);
         }
-        else if(s[i] != t[i]){
-            a[i] = -1;
-        }
-        else{
-            a[i] = 1;
+        cnt++;
+    }
+    for(int i = 1 ; i <= nt ; i++){
+        string temp = s.substr(0 , nt - i) + s.substr(ns - i , i);
+        if(temp == t){
+            Max = max(Max , ns - nt);
         }
     }
-    fo(i , n - 1){
-        if(a[i] == 0 && a[i + 1] == 1){
-            cout << "YES\n";
-            return;
-        }
-    }
-    cout << "NO\n";
+    cout << Max << ln;
 }
 int main(){
     ios::sync_with_stdio(false);
     cin.tie(NULL);
     /*------------------------------------*/
     int t = 1;
-    cin >> t;
+    //cin >> t;
     while(t--){
         solve();
     }

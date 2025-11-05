@@ -15,33 +15,46 @@ const int dx[8] = {1, 0, -1, 0, 1, 1, -1, -1};
 const int dy[8] = {0, 1, 0, -1, -1, 1, -1, 1};
 int MOD = 1e9 + 7;
 
-const int N  = 2e5 + 10;
+const int ZN  = 1e5 + 500;
+int a[ZN];
 //always check input!!!
 
 void solve()
 {
-    string s , t;
-    cin >> s >> t;
-    int n = sz(s);
-    int a[n];
-    fo(i , n){
-        if(s[i] == '0' && t[i] == '0'){
-            a[i] = 0;
+    int n,fir,uni;
+    cin >> n;
+    int v[n][n-1];
+    vector<int> b;
+    fill(a,a+n+1,0);
+    
+    fo(i,n){
+        fo(j,n-1){
+            cin >> v[i][j];
         }
-        else if(s[i] != t[i]){
-            a[i] = -1;
-        }
-        else{
-            a[i] = 1;
+        a[v[i][0]]++;
+    }
+    fo(i,n+1){
+        if(a[i] == 1){
+            uni = i;
+        }else if(a[i] == n-1){
+            fir = i;
+            
         }
     }
-    fo(i , n - 1){
-        if(a[i] == 0 && a[i + 1] == 1){
-            cout << "YES\n";
-            return;
+    b.pb(fir);
+    fo(i,n){
+        if(uni == v[i][0]){
+            fo(j,n-1){
+                b.pb(v[i][j]);
+            }
         }
     }
-    cout << "NO\n";
+    fo(i,sz(b)){
+        cout << b[i] << " ";
+    }
+    cout << endl;
+
+
 }
 int main(){
     ios::sync_with_stdio(false);

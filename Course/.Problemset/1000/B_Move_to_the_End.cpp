@@ -20,29 +20,37 @@ const int N  = 2e5 + 10;
 
 void solve()
 {
-    int n,s,e,u,d,cnt=0;
-    cin >> n >> s >> e >> u >> d;
-    int x=s;
-    while(x){
-        if(x>n){cout << "use the stairs";break;} 
-        else if(x == e){break;}
-        else if(x>e && (x-e)%d == 0){
-            cnt += (x-e)/d;
-            
-        }
+    int n;
+    cin >> n;
+    vector<ll> a(n) , ps(n , 0) , dp(n);
+    fo(i , n) cin >> a[i];
 
-
-        cnt++;
-        x+=u;
+    dp[0] = a[0];
+    for(int i = 1 ; i < n ; i++){
+        dp[i] = max(dp[i - 1] , a[i]);
     }
 
+    ps[n - 1] = a[n - 1];
+    for(int i = n - 2 ; i >= 0 ; i--){
+        ps[i] += a[i] + ps[i + 1];
+    }
+
+    for(int i = n - 1 ; i >= 1 ; i--){
+        if(dp[i - 1] > a[i]){
+            cout << ps[i] - a[i] + dp[i - 1] << ' ';
+        }
+        else{
+            cout << ps[i] << ' ';
+        }
+    }
+    cout << ps[0] << ln;
 }
 int main(){
     ios::sync_with_stdio(false);
     cin.tie(NULL);
     /*------------------------------------*/
     int t = 1;
-    //cin >> t;
+    cin >> t;
     while(t--){
         solve();
     }

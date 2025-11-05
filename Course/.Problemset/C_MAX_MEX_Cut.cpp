@@ -18,30 +18,44 @@ int MOD = 1e9 + 7;
 const int N  = 2e5 + 10;
 //always check input!!!
 
+int cnt(string s) {
+    int ans = count(s.begin(), s.end(), '0');
+    int n = s.size();
+    bool a = false, b = false;
+    for(int i = 0; i < n; ++i){
+        if(s[i] == '0'){
+            a = true;
+        }
+        if(s[i] == '1'){
+            b = true;
+        } 
+        if(a && b){
+            ++ans;
+            a = b = false;
+        }
+    }
+    return ans;
+}
+
 void solve()
 {
-    string s , t;
-    cin >> s >> t;
-    int n = sz(s);
-    int a[n];
+    string a , b;
+    int n;
+    cin >> n;
+    cin >> a >> b;
+    ll ans = 0;
+    string s = "";
     fo(i , n){
-        if(s[i] == '0' && t[i] == '0'){
-            a[i] = 0;
-        }
-        else if(s[i] != t[i]){
-            a[i] = -1;
+        if(a[i] != b[i]){
+            ans += 2;
+            ans += cnt(s);
+            s = "";
         }
         else{
-            a[i] = 1;
+            s += a[i];
         }
     }
-    fo(i , n - 1){
-        if(a[i] == 0 && a[i + 1] == 1){
-            cout << "YES\n";
-            return;
-        }
-    }
-    cout << "NO\n";
+    cout << ans + cnt(s) << ln;
 }
 int main(){
     ios::sync_with_stdio(false);

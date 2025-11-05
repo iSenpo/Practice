@@ -20,28 +20,36 @@ const int N  = 2e5 + 10;
 
 void solve()
 {
-    string s , t;
-    cin >> s >> t;
-    int n = sz(s);
+    int n;
+    cin >> n;
     int a[n];
+    deque<int> q1 , q2;
     fo(i , n){
-        if(s[i] == '0' && t[i] == '0'){
-            a[i] = 0;
-        }
-        else if(s[i] != t[i]){
-            a[i] = -1;
-        }
-        else{
-            a[i] = 1;
-        }
+        cin >> a[i];
+        q1.push_back(a[i]);
+        q2.push_back(a[i]);
+    } 
+    vector<int> cw(a , a + n);
+    sort(all(cw));
+    vector<int> ccw(all(cw));
+    reverse(all(ccw));
+    while(q1.front() != 1){
+        int x = q1.front();
+        q1.pop_front();
+        q1.push_back(x);
     }
-    fo(i , n - 1){
-        if(a[i] == 0 && a[i + 1] == 1){
-            cout << "YES\n";
-            return;
-        }
+    while(q2.back() != 1){
+        int x = q2.back();
+        q2.pop_back();
+        q2.push_front(x);
     }
-    cout << "NO\n";
+    vector<int> v1(all(q1)) , v2(all(q2));
+    if(v1 == cw || v2 == ccw){
+        cout << "YES\n";
+    }
+    else{
+        cout << "NO\n";
+    }
 }
 int main(){
     ios::sync_with_stdio(false);

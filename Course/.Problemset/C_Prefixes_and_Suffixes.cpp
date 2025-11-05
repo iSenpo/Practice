@@ -25,14 +25,57 @@ void solve()
     int m = (2 * n) - 2;
     vector<string> a(m);
     fo(i , m) cin >> a[i];
-    sort(all(a));
-    string t , s;
-    t = a[m - 1];
-    s = a[m - 2];
-    int cnt = 1;
-    fo(i , m){
-        
+    vector<string> v(all(a));
+    for(int i = 0 ; i < m - 1 ; i++){
+        for(int j = 0 ; j < m - i - 1 ; j++){
+            if(sz(a[j]) > sz(a[j + 1])){
+                swap(a[j] , a[j + 1]);
+            }
+        }
     }
+    string t = a[m - 1] , s = a[m - 2];
+    string str;
+    string s1 , s2 , t1 , t2 , u1 , u2 , l1 , l2;
+    s1 += a[0] + s;
+    s2 += t + a[1];
+    t1 += a[0] + t;
+    t2 += s + a[1];
+    u1 += a[1] + s;
+    u2 += t + a[0];
+    l1 += a[1] + t;
+    l2 += s + a[0];
+    if(s1 == s2){
+        str = s1;
+    }
+    else if(t1 == t2){
+        str = t1;
+    }
+    else if(u1 == u2){
+        str = u1;
+    }
+    else{
+        str = l1;
+    }
+    vector<char> ans;
+    map<string , int> cnt;
+    for(int i = 0 ; i < m ; i ++){
+        int size = sz(v[i]);
+        if(str.substr(0 , size) == v[i]){
+            cnt[v[i]]++;
+            if(cnt[v[i]]%2 == 0){
+                ans.push_back('S');
+                continue;
+            }
+            ans.push_back('P');
+        }
+        else{
+            ans.push_back('S');
+        }
+    }    
+    for(char c : ans){
+        cout << c;
+    }
+    cout << ln;
 }
 int main(){
     ios::sync_with_stdio(false);

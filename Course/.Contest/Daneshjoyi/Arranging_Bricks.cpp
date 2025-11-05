@@ -15,40 +15,41 @@ const int dx[8] = {1, 0, -1, 0, 1, 1, -1, -1};
 const int dy[8] = {0, 1, 0, -1, -1, 1, -1, 1};
 int MOD = 1e9 + 7;
 
-const int N  = 2e5 + 10;
+const int N  = 2001;
 //always check input!!!
-
+vector<vector<ll>> memo(N , vector<ll>(N , -1));
+int n;
+ll dp(int w , int h , int t){
+    if(t == n && memo[w][h] == -1){
+        memo[w][h] = 1;
+        return 1;
+    }
+    if(t > n){
+        return 0;
+    }
+    if(memo[w][h] != -1){
+        return memo[w][h];
+    }
+    memo[w][h] = (dp(w + 1 , h , t + h) + dp(w , h + 1 , t + 1)) % MOD;
+    return memo[w][h];
+}
 void solve()
 {
-    string s , t;
-    cin >> s >> t;
-    int n = sz(s);
-    int a[n];
-    fo(i , n){
-        if(s[i] == '0' && t[i] == '0'){
-            a[i] = 0;
+    cin >> n;
+    dp(1 , 1 , 1);
+    fo(i , 5){
+        fo(j , 5){
+            cout << memo[i][j] << ' ';
         }
-        else if(s[i] != t[i]){
-            a[i] = -1;
-        }
-        else{
-            a[i] = 1;
-        }
+        cout << ln;
     }
-    fo(i , n - 1){
-        if(a[i] == 0 && a[i + 1] == 1){
-            cout << "YES\n";
-            return;
-        }
-    }
-    cout << "NO\n";
 }
 int main(){
     ios::sync_with_stdio(false);
     cin.tie(NULL);
     /*------------------------------------*/
     int t = 1;
-    cin >> t;
+    //cin >> t;
     while(t--){
         solve();
     }

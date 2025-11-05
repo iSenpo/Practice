@@ -15,28 +15,43 @@ const int dx[8] = {1, 0, -1, 0, 1, 1, -1, -1};
 const int dy[8] = {0, 1, 0, -1, -1, 1, -1, 1};
 int MOD = 1e9 + 7;
 
-const int N  = 2001;
+const int N  = 2e5 + 10;
 //always check input!!!
-vector<vector<int>> memo(N , vector<int>(N , -1));
-int n;
-ll dp(int w , int h , int t){
-    if(t == n){
-        cerr << w  <<' ' << h<<' ' << t<<' ' << ln;
-        return 1;
+ll gcd(ll a , ll b){
+    while(b != 0){
+        ll r = a%b;
+        a = b;
+        b = r;
     }
-    if(t > n || t < h){
-        return 0;
-    }
-    if(memo[w][h] != -1){
-        return memo[w][h];
-    }
-    memo[w][h] = (dp(w + 1 , h , t + h) + dp(w , h + 1 , t + 1)) % MOD;
-    return memo[w][h];
+    return a;
 }
 void solve()
 {
+    int n;
     cin >> n;
-    cout << dp(1 , 1 , 1) << ln;
+    ll a[n];
+    fo(i , n) cin >> a[i];
+    sort(a , a + n);
+    fo(i , n){
+        if(a[i] % a[0] != 0){
+            a[0] = gcd(a[i] , a[0]);
+        }
+    }
+    if(a[0] == 1){
+        cout << 1 << ln;
+        return;
+    }
+    vector<ll> ans;
+    for(int i = 1 ; i <= sqrt(a[0]) ; i++){
+        if(a[0]%i == 0){
+            ll b = a[0]/i;
+            ans.pb(i);
+            if(b != i){
+                ans.pb(b);
+            }
+        }
+    }
+    cout << ans.size() << ln; 
 }
 int main(){
     ios::sync_with_stdio(false);

@@ -20,35 +20,28 @@ const int N  = 2e5 + 10;
 
 void solve()
 {
-    string s , t;
-    cin >> s >> t;
-    int n = sz(s);
-    int a[n];
-    fo(i , n){
-        if(s[i] == '0' && t[i] == '0'){
-            a[i] = 0;
-        }
-        else if(s[i] != t[i]){
-            a[i] = -1;
-        }
-        else{
-            a[i] = 1;
-        }
+    ll n , k;
+    cin >> n >> k;
+    ll a[k];
+    fo(i , k){
+        cin >> a[i];
     }
-    fo(i , n - 1){
-        if(a[i] == 0 && a[i + 1] == 1){
-            cout << "YES\n";
-            return;
-        }
+    for(int i = 1 ; i < k ; i++){
+        a[i] = a[i] - a[i - 1];
     }
-    cout << "NO\n";
+    if(a[k - 1] == 0){
+        cout << 0 << ln;
+        return;
+    }
+    cout << 1 << ln;
+    cout << 1 << ' ' << a[k - 1] << ln;
 }
 int main(){
     ios::sync_with_stdio(false);
     cin.tie(NULL);
     /*------------------------------------*/
     int t = 1;
-    cin >> t;
+    //cin >> t;
     while(t--){
         solve();
     }
