@@ -139,7 +139,7 @@ class RoboLine{
 };
 int main(){
     srand(time(NULL));
-    RoboLine start(10,4);
+    RoboLine start(15 , 5);
     while(Robot::RobotCounter > 1){
         start.play();
         string skip;
