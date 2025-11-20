@@ -18,19 +18,24 @@ int MOD = 1e9 + 7;
 const int N  = 2e5 + 10;
 //always check input!!!
 
-int pow2(int n){
-    int j = 0;
-    
-}
 void solve()
 {
-    int n;
-    cin >> n;
-    string s;
-    cin >> s;
-    int x , y;
-    cin >> x >> y;
-
+    int n , q;
+    cin >> n >> q;
+    int a[n];
+    for(int i = 0 ; i < n ; i ++){
+        cin >> a[i];
+    }    
+    ll ps[n + 1];
+    ps[0] = 0;
+    for(int i = 1; i <= n ; i++){
+        ps[i] = ps[i - 1] + a[i - 1];
+    }
+    while(q--){
+        int l , r;
+        cin >> l >> r;
+        cout << ps[r] - ps[l - 1] << ln; 
+    }
 }
 int main(){
     ios::sync_with_stdio(false);
