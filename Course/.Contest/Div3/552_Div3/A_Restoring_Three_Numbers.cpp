@@ -20,50 +20,18 @@ const int N  = 2e5 + 10;
 
 void solve()
 {
-    int n;
-    cin >> n;
-    int a[n];
-    ll ans = 0;
-    fo(i , n) cin >> a[i];
-    int cnt1 = 0 , cnt2 = 0;
-    fo(i , n){
-        if(a[i]%3 == 0){
-            ans++;
-        }
-        else if(a[i]%3 == 1){
-            cnt1++;
-        }
-        else{
-            cnt2++;
-        }
-    }
-    int t = min(cnt1 , cnt2);
-    ans += t;
-    //cerr << t << ln;
-    cnt1 -= t;
-    cnt2 -= t;
-    int d1 = cnt1/3;
-    ans += d1;
-    cnt1 -= (d1 * 3);
-    while(cnt1 >= 3){
-        ans++;
-        cnt1 -= 3;
-    }
-    int d2 = cnt2/3;
-    ans += d2;
-    cnt2 -= (d2 * 3);
-    while(cnt2 >= 3){
-        ans++;
-        cnt2 -= 3;
-    }
-    cout << ans << ln;
+    int a[4];
+    fo(i , 4) cin >> a[i];
+    sort(a , a + 4);
+    int x1 = a[3] - a[0] , x2 = a[3] - a[1] , x3 = a[3] - a[2];
+    cout << x1 <<' '<< x2 <<' '<< x3 <<ln;
 }
 int main(){
     ios::sync_with_stdio(false);
     cin.tie(NULL);
     /*------------------------------------*/
     int t = 1;
-    cin >> t;
+    //cin >> t;
     while(t--){
         solve();
     }

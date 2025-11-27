@@ -20,41 +20,42 @@ const int N  = 2e5 + 10;
 
 void solve()
 {
-    int n;
-    cin >> n;
+    int n , b , c;
+    cin >> n >> b >> c;
+    int cc = c;
     int a[n];
-    ll ans = 0;
     fo(i , n) cin >> a[i];
-    int cnt1 = 0 , cnt2 = 0;
+    int ans = 0;
     fo(i , n){
-        if(a[i]%3 == 0){
-            ans++;
-        }
-        else if(a[i]%3 == 1){
-            cnt1++;
+        if(a[i] == 0){
+            if(cc > 0){
+                cc--;
+            }
+            else if(b > 0){
+                b--;
+            }
+            else{
+                break;
+            }
         }
         else{
-            cnt2++;
+            if(cc == c){
+                cc--;
+            }
+            else if(b > 0){
+                b--;
+                if(cc < c){
+                    cc++;
+                }
+            }
+            else if(cc > 0){
+                cc--;
+            }
+            else{
+                break;
+            }
         }
-    }
-    int t = min(cnt1 , cnt2);
-    ans += t;
-    //cerr << t << ln;
-    cnt1 -= t;
-    cnt2 -= t;
-    int d1 = cnt1/3;
-    ans += d1;
-    cnt1 -= (d1 * 3);
-    while(cnt1 >= 3){
         ans++;
-        cnt1 -= 3;
-    }
-    int d2 = cnt2/3;
-    ans += d2;
-    cnt2 -= (d2 * 3);
-    while(cnt2 >= 3){
-        ans++;
-        cnt2 -= 3;
     }
     cout << ans << ln;
 }
@@ -63,7 +64,7 @@ int main(){
     cin.tie(NULL);
     /*------------------------------------*/
     int t = 1;
-    cin >> t;
+    //cin >> t;
     while(t--){
         solve();
     }

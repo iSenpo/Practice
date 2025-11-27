@@ -18,66 +18,67 @@ int MOD = 1e9 + 7;
 const int N  = 2e5 + 10;
 //always check input!!!
 
+//Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday
+//{0 , 1 , 4} [a];
+//{2 , 6} [b];
+//{3 , 5} [c];
+
+bool week(int a , int b , int c){
+    if(a >= 3 && b >= 2 && c >= 2){
+        return true;
+    }
+    return false;
+}
 void solve()
 {
     int a , b , c;
     cin >> a >> b >> c;
-    int per[3] = {2 , 3 , 4};
     ll ans = 0;
-    int Min = min (a , min(b , c));
-    ans += (Min*3);
-    a -= Min;
-    b -= Min;
-    c -= Min;
-    if(c == 0){
-        int k = 4;
-        while(k && b > 0 && a > 0){
-            ans+=2;
-            b--;
-            a--;
-            k--;
-        }
-        if(a){
-            ans++;
-            a--;
-        }
-        else if(b && k != 4){
-            ans++;
-            b--;
+    while(week(a , b , c)){
+        ans += 7;
+        a -= 3;
+        b -= 2;
+        c -= 2;
+    }
+    int sum = 0;
+    for(int i = 0 ; i < 7 ; i++){
+        fo(j , 7){
+            int curr = 0;
+            int ta = a , tb = b , tc = c;
+            for(int p = j ; p < j + 7 ; p++){
+                int tj = p%7;
+                if(tj == 0 || tj == 4 || tj == 1){
+                    if(ta <= 0){
+                        break;
+                    }
+                    else{
+                        ta--;
+                        curr++;
+                    }
+                }
+                if(tj == 2 || tj == 6){
+                    if(tb <= 0){
+                        break;
+                    }
+                    else{
+                        tb--;
+                        curr++;
+                    }
+                }
+                if(tj == 3 || tj == 5){
+                    if(tc <= 0){
+                        break;
+                    }
+                    else{
+                        tc--;
+                        curr++;
+                    }
+                }
+            }
+            sum = max(sum , curr);
         }
     }
-    else if(b == 0){
-        int k = 3;
-        while(k-- && a > 0 && c > 0){
-            ans+=2;
-            a--;
-            c--;
-        }
-        if(a){
-            ans++;
-            a--;
-        }
-        else if(c){
-            ans++;
-            c--;
-        }
-    }
-    else if(a == 0){
-        int k = 2;
-        while(k-- && b > 0 && c > 0){
-            ans+=2;
-            b--;
-            c--;
-        }
-        if(c){
-            ans++;
-            c--;
-        }
-        else if(b){
-            ans++;
-            b--;
-        }
-    }
+    ans += sum;
     cout << ans << ln;
 }
 int main(){

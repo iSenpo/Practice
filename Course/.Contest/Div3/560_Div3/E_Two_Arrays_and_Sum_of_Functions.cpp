@@ -13,8 +13,8 @@ using namespace std;
 
 const int dx[8] = {1, 0, -1, 0, 1, 1, -1, -1};
 const int dy[8] = {0, 1, 0, -1, -1, 1, -1, 1};
-int MOD = 1e9 + 7;
 
+int MOD = 998244353;
 const int N  = 2e5 + 10;
 //always check input!!!
 
@@ -22,39 +22,19 @@ void solve()
 {
     int n;
     cin >> n;
-    int a[n];
-    ll ans = 0;
+    int a[n] , b[n];
     fo(i , n) cin >> a[i];
-    int cnt1 = 0 , cnt2 = 0;
+    fo(i , n) cin >> b[i];
+    ll c[n];
     fo(i , n){
-        if(a[i]%3 == 0){
-            ans++;
-        }
-        else if(a[i]%3 == 1){
-            cnt1++;
-        }
-        else{
-            cnt2++;
-        }
+        c[i] = (1LL)*(i + 1)*(n - i)*(a[i]);
     }
-    int t = min(cnt1 , cnt2);
-    ans += t;
-    //cerr << t << ln;
-    cnt1 -= t;
-    cnt2 -= t;
-    int d1 = cnt1/3;
-    ans += d1;
-    cnt1 -= (d1 * 3);
-    while(cnt1 >= 3){
-        ans++;
-        cnt1 -= 3;
-    }
-    int d2 = cnt2/3;
-    ans += d2;
-    cnt2 -= (d2 * 3);
-    while(cnt2 >= 3){
-        ans++;
-        cnt2 -= 3;
+    sort(c , c + n);
+    sort(b , b + n);
+    reverse(b , b + n);
+    ll ans = 0;
+    fo(i , n){
+        ans = (ans + ((c[i] % MOD * (1LL) * b[i])) % MOD ) % MOD;
     }
     cout << ans << ln;
 }
@@ -63,7 +43,7 @@ int main(){
     cin.tie(NULL);
     /*------------------------------------*/
     int t = 1;
-    cin >> t;
+    //cin >> t;
     while(t--){
         solve();
     }

@@ -20,28 +20,19 @@ const int N  = 2e5 + 10;
 
 void solve()
 {
-    int k , n , a , b;
-    cin >> k >> n >> a >> b;
-    int ans = 0;
-    if(n * b >= k){
-        cout << -1 << ln;
-        return;
-    }
-    while(k - a > b*(n - 1) && n > 0){
-        k -= a;
-        n--;
-        ans++;
-    }
-    if(k <= b && k <= a){
-        cout << -1 << ln;
-        return;
-    }
-    if(n > 0){
-        k -= b * n;
-    }
-    if(k <= 0){
-        cout << -1 << ln;
-        return;
+    ll n , k , a , b;
+    cin >> n >> k >> a >> b;
+    ll ans = -1;
+    ll dw = 0 , up = k;
+    while(dw <= up){
+        ll m = (dw + up)/2;
+        if((m * a)*(1LL) + ((k - m)*(1LL)*b)*(1LL) < n){
+            ans = max(ans , m);
+            dw = m + 1;
+        }
+        else{
+            up = m - 1;
+        }
     }
     cout << ans << ln;
 }

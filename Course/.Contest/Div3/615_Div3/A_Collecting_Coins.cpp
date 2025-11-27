@@ -20,43 +20,28 @@ const int N  = 2e5 + 10;
 
 void solve()
 {
-    int n;
-    cin >> n;
-    int a[n];
-    ll ans = 0;
-    fo(i , n) cin >> a[i];
-    int cnt1 = 0 , cnt2 = 0;
-    fo(i , n){
-        if(a[i]%3 == 0){
-            ans++;
-        }
-        else if(a[i]%3 == 1){
-            cnt1++;
-        }
-        else{
-            cnt2++;
-        }
+    ll a , b , c , n;
+    cin >> a >> b >> c >> n;
+    ll ans = a +b + c + n;
+    ll t = max(a , max(b , c));
+    if(a < t && (t - a) <= n){
+        n -= (t - a);
+        a = t;
     }
-    int t = min(cnt1 , cnt2);
-    ans += t;
-    //cerr << t << ln;
-    cnt1 -= t;
-    cnt2 -= t;
-    int d1 = cnt1/3;
-    ans += d1;
-    cnt1 -= (d1 * 3);
-    while(cnt1 >= 3){
-        ans++;
-        cnt1 -= 3;
+    if(b < t && (t - b) <= n){
+        n -= (t - b);
+        b = t;
     }
-    int d2 = cnt2/3;
-    ans += d2;
-    cnt2 -= (d2 * 3);
-    while(cnt2 >= 3){
-        ans++;
-        cnt2 -= 3;
+    if(c < t && (t - c) <= n){
+        n -= (t - c);
+        c = t;
     }
-    cout << ans << ln;
+    if(a == b && a == c && a == t && n%3 == 0){
+        cout << "YES\n";
+    }
+    else{
+        cout << "NO\n";
+    }
 }
 int main(){
     ios::sync_with_stdio(false);

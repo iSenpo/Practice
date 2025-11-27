@@ -23,83 +23,59 @@ void solve()
     int n;
     cin >> n;
     int a[n];
-    fo(i , n) cin >> a[i];
-    vector<int> l , r;
-    fo(i , n - 1){
-        if(a[i] < a[i + 1]){
-            l.pb(a[i]);
-        }
-        else{
-            l.pb(a[i]);
-            break;
-        }
+    deque<int> q;
+    fo(i , n){
+        cin >> a[i];
+        q.push_back(a[i]);
     }
-    for(int i = n - 1 ; i >= 0 ; --i){
-        if(a[i] < a[i - 1]){
-            r.pb(a[i]);
-        }
-        else{
-            r.pb(a[i]);
-            break;
-        }
-    }
-    if(l.empty() && r.empty()){
-        cout << 1 << ln << 'R' << ln;
-        return;
-    }
-    int ptl = 0;
-    int ptr = 0;
-    int last;
-    string ans ;
-    while(ptl < sz(l) && ptr < sz(r)){
-        if(l[ptl] < r[ptr]){
-            ans += 'L';
-            last = l[ptl];
-            ptl++;
-        }
-        else if(r[ptr] < l[ptl]){
-            ans += 'R';
-            last = r[ptr];
-            ptr++;
-        }
-        else if(l[ptl] == r[ptr]){
-            if(sz(l) - ptl > sz(r) - ptr){
-                while(ptl <= sz(l)){
-                    ans += 'L';
-                    ptl++;
-                }
+    string ans;
+    int last = 0;
+    fo(i , n){
+        int x = q.front();
+        int y = q.back();
+        q.pop_back();
+        q.pop_front();
+        if(x == y){
+            if(x <= last){
+                break;
+            }
+            if(q.front() < q.back()){
+                q.push_back(y);
+                ans += 'L'; 
+                last = x;
             }
             else{
-                while(ptr <= sz(r)){
-                    ans += 'R';
-                    ptr++;
-                }
+                q.push_front(x);
+                ans += 'R';
+                last = y;
             }
-            break;
         }
-    }
-    while(ptr < sz(r)){
-        if(r[ptr] < last){
+        else if(x < y && x > last){
+            q.push_back(y);
+            ans += 'L'; 
+            last = x;
+        }
+        else if(x > y && y > last){
+            q.push_front(x);
             ans += 'R';
-            last = r[ptr];
-            ptr++;
+            last = y;
+        }
+        else if(x > last){
+            q.push_back(y);
+            ans += 'L'; 
+            last = x;
+        }
+        else if(y > last){
+            q.push_front(x);
+            ans += 'R';
+            last = y;
         }
         else{
-            break;
-        }
-    }
-    while(ptl < sz(l)){
-        if(l[ptl] < last){
-            ans += 'L';
-            last = l[ptl];
-            ptl++;
-        }
-        else{
+            cerr << "HELO" << ln;
             break;
         }
     }
     cout << sz(ans) << ln << ans << ln;
-
 }
 int main(){
     ios::sync_with_stdio(false);

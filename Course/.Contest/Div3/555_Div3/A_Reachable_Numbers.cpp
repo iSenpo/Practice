@@ -22,17 +22,23 @@ void solve()
 {
     int n;
     cin >> n;
-    ll ans = 0;
-    unordered_set<int> st;
-    st.insert(n);
-    while(n > 1){
+    int cnt = 0;
+    map<int , bool> seen;
+    while(n > 0){
+        if(seen[n]){
+            break;
+        }
+        else{
+            seen[n] = true;
+        }
         n++;
-        st.insert(n);
         while(n%10 == 0){
             n /= 10;
         }
+        cnt++;
+        //cerr << n << ' ';
     }
-    cout << sz(st) << ln;
+    cout << cnt << ln;
 }
 int main(){
     ios::sync_with_stdio(false);

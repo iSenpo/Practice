@@ -20,50 +20,34 @@ const int N  = 2e5 + 10;
 
 void solve()
 {
-    int n;
-    cin >> n;
-    int a[n];
-    ll ans = 0;
-    fo(i , n) cin >> a[i];
-    int cnt1 = 0 , cnt2 = 0;
+    string s;
+    cin >> s;
+    int n = sz(s);
+    string ans;
     fo(i , n){
-        if(a[i]%3 == 0){
-            ans++;
+        if(s[i] == 'A' || s[i] == 'a'){
         }
-        else if(a[i]%3 == 1){
-            cnt1++;
-        }
+        else if(s[i] == 'O' || s[i] == 'o'){}
+        else if(s[i] == 'Y' || s[i] == 'y'){}
+        else if(s[i] == 'E' || s[i] == 'e'){}
+        else if(s[i] == 'U' || s[i] == 'u'){}
+        else if(s[i] == 'I' || s[i] == 'i'){}
         else{
-            cnt2++;
+            if(s[i] <= 90){
+                s[i] += 32;
+            }
+            ans += ".";
+            ans += s[i]; 
         }
     }
-    int t = min(cnt1 , cnt2);
-    ans += t;
-    //cerr << t << ln;
-    cnt1 -= t;
-    cnt2 -= t;
-    int d1 = cnt1/3;
-    ans += d1;
-    cnt1 -= (d1 * 3);
-    while(cnt1 >= 3){
-        ans++;
-        cnt1 -= 3;
-    }
-    int d2 = cnt2/3;
-    ans += d2;
-    cnt2 -= (d2 * 3);
-    while(cnt2 >= 3){
-        ans++;
-        cnt2 -= 3;
-    }
-    cout << ans << ln;
+    cout << ans  << ln;
 }
 int main(){
     ios::sync_with_stdio(false);
     cin.tie(NULL);
     /*------------------------------------*/
     int t = 1;
-    cin >> t;
+    //cin >> t;
     while(t--){
         solve();
     }

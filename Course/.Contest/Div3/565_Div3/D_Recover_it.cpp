@@ -15,83 +15,55 @@ const int dx[8] = {1, 0, -1, 0, 1, 1, -1, -1};
 const int dy[8] = {0, 1, 0, -1, -1, 1, -1, 1};
 int MOD = 1e9 + 7;
 
-const int N  = 2750135;
+const int N  = 2750131 + 1;
 //always check input!!!
+//2750131
+vector<ll> p;
 bool not_prime[N];
-vector<int> primes;
-
-void primeFinder(){
-    for(int i = 2; i <= N ; ++i){
+void linear_sieve() {
+    for(int i = 2; i <= N; i++){
         if(!not_prime[i]){
-            primes.pb(i);
-            for(int j = i * 2 ; j <= N ; j += i){
-                not_prime[j] = 1;
+            p.push_back(i);
+        }
+        for(int pr : p){
+            ll x = 1LL * pr * i;
+            if(x > N){
+                break;
+            }
+            not_prime[x] = true;
+            if(i % pr == 0){
+                break;
             }
         }
     }
 }
+int GreatestDivisor(int n){
+    for(int i = 0; p[i] <= sqrt(n) ; i++){
+        if(n%p[i] == 0){
+            return (n/p[i]);
+        }
+    }
+    return -1;
+}
+
 void solve()
 {
     int n;
     cin >> n;
-    int a[n];
-    fo(i , n) cin >> a[i];
-    vector<bool> mark(n , false);
-    vector<int> ans;
-    sort(a , a + n);
-    fo(i , n){
-        if(not_prime[a[i]]){
-            int k;
-            fo(j , 200000){
-                if(a[i]%primes[j] == 0){
-                    k = a[i] / primes[j];
-                    break;
-                }
-            }
-            ans.pb(a[i]);
-            mark[i] = true;
-            int up = n - 1;
-            int dw = 0;
-            int mid = (up + dw)/2;
-            while(up >= dw){
-                mid = (up + dw)/2;
-                if(a[mid] == k && !mark[mid]){
-                    mark[mid]; 
-                    break;
-                }
-                else if(a[mid] > k){
-                    up = mid - 1;
-                }
-                else {
-                    dw = mid + 1;
-                }
-            }
-        }
+    int a[2 * n];
+    fo(i , 2 * n){
+        cin >> a[i];
     }
-    fo(i , n){
-        if(!mark[i]){
-            ans.pb(a[i]);
-            int k = primes[a[i]];
-            int up = n - 1;
-            int dw = 0;
-            int mid = (up + dw)/2;
-            while(up >= dw){
-                mid = (up + dw)/2;
-                if(a[mid] == k && !mark[mid]){
-                    mark[mid]; 
-                    break;
-                }
-                else if(a[mid] > k){
-                    up = mid - 1;
-                }
-                else {
-                    dw = mid + 1;
-                }
-            }
+    sort(a , a + (2*n));
+    vector<int> ans , primes;
+    map<int , bool> mark;
+    fo(i , 2 * n){
+        if(binary_search(all(p) , a[i])){
+            primes.push_back(a[i]);
         }
-    }
-    for(int i : ans){
-        cout << i << ' ';
+        else{
+            
+        }
     }
 }
 int main(){
@@ -101,7 +73,6 @@ int main(){
     int t = 1;
     //cin >> t;
     while(t--){
-        primeFinder();
         solve();
     }
     return 0;

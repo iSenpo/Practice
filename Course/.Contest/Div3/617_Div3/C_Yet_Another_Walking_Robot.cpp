@@ -15,48 +15,52 @@ const int dx[8] = {1, 0, -1, 0, 1, 1, -1, -1};
 const int dy[8] = {0, 1, 0, -1, -1, 1, -1, 1};
 int MOD = 1e9 + 7;
 
-const int N  = 2e5 + 10;
+const int N  = 1e9;
 //always check input!!!
 
 void solve()
 {
     int n;
     cin >> n;
-    int a[n];
-    ll ans = 0;
-    fo(i , n) cin >> a[i];
-    int cnt1 = 0 , cnt2 = 0;
-    fo(i , n){
-        if(a[i]%3 == 0){
-            ans++;
+    string s;
+    cin >> s;
+    s = "0" + s;
+    int Min = N;
+    pii base = {0 , 0};
+    pii ans;
+    int dx = 0 , dy = 0;
+    map<pii , int> ind;
+    map<char , int> cnt;
+    for(int i = 1 ; i <= n ; i++){
+        if(s[i] == 'D'){
+            dy--;
         }
-        else if(a[i]%3 == 1){
-            cnt1++;
+        if(s[i] == 'U')
+            dy++;
+        if(s[i] == 'R')
+            dx++;
+        if(s[i] == 'L')
+            dx--;
+            
+        base.first += dx;
+        base.second += dy;
+        if(ind[base] != 0){
+            if(i - ind[base] < Min){
+                Min = i - ind[base];
+                ans = {i + 1 , ind[base] + 1};
+                ind[base] = i;
+            }
         }
         else{
-            cnt2++;
+            ind[base] = i;
         }
     }
-    int t = min(cnt1 , cnt2);
-    ans += t;
-    //cerr << t << ln;
-    cnt1 -= t;
-    cnt2 -= t;
-    int d1 = cnt1/3;
-    ans += d1;
-    cnt1 -= (d1 * 3);
-    while(cnt1 >= 3){
-        ans++;
-        cnt1 -= 3;
+    if(Min == N){
+        cout << -1 << ln;
     }
-    int d2 = cnt2/3;
-    ans += d2;
-    cnt2 -= (d2 * 3);
-    while(cnt2 >= 3){
-        ans++;
-        cnt2 -= 3;
+    else{
+        cout << ans.first << ' ' << ans.second << ln;
     }
-    cout << ans << ln;
 }
 int main(){
     ios::sync_with_stdio(false);

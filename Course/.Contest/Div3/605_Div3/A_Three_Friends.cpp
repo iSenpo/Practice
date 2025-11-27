@@ -20,41 +20,28 @@ const int N  = 2e5 + 10;
 
 void solve()
 {
-    int n;
-    cin >> n;
-    int a[n];
+    ll  a[3];
+    cin >> a[0] >> a[1] >> a[2];
+    ll sum = a[0] + a[1] + a[2];
+    if(sum%3 == 2){
+        sum++;
+    }
+    ll avg = sum/3;
     ll ans = 0;
-    fo(i , n) cin >> a[i];
-    int cnt1 = 0 , cnt2 = 0;
-    fo(i , n){
-        if(a[i]%3 == 0){
-            ans++;
+    for(int i = 0 ; i < 3 ; i++){
+        if(a[i] > avg){
+            a[i]--;
         }
-        else if(a[i]%3 == 1){
-            cnt1++;
-        }
-        else{
-            cnt2++;
+        if(a[i] < avg){
+            a[i]++;
         }
     }
-    int t = min(cnt1 , cnt2);
-    ans += t;
-    //cerr << t << ln;
-    cnt1 -= t;
-    cnt2 -= t;
-    int d1 = cnt1/3;
-    ans += d1;
-    cnt1 -= (d1 * 3);
-    while(cnt1 >= 3){
-        ans++;
-        cnt1 -= 3;
-    }
-    int d2 = cnt2/3;
-    ans += d2;
-    cnt2 -= (d2 * 3);
-    while(cnt2 >= 3){
-        ans++;
-        cnt2 -= 3;
+    fo(i , 3){
+        for(int j = i + 1; j < 3 ; j++){
+            if(i != j){
+                ans += abs(a[i] - a[j]);
+            }
+        }
     }
     cout << ans << ln;
 }

@@ -22,22 +22,33 @@ void solve()
 {
     int n;
     cin >> n;
-    string s , t;
+    string s;
     cin >> s;
-    for(char c : s){
-        if(t.size() % 2 == 0) {
-            t.push_back(c);
-        }
-        else{
-            if(t.back() != c){
-                t.push_back(c);
+    string ans;
+    for(int i = 0 ; i < n ; i++){
+        ans += s[i];
+        i++;
+        bool end = false;
+        while(s[i] == ans.back()){
+            i++;
+            if(i >= n){
+                end = true;
+                break;
             }
         }
+        if(end){
+            break;
+        }
+        ans += s[i];
     }
-    if(sz(t) % 2 == 1){
-        t = t.substr(0 , sz(t) - 1);
+    if(ans.back() == '\0'){
+        ans.pop_back();
     }
-    cout << sz(s) - sz(t) << ln << t;
+    if(ans.size()%2 == 1){
+        ans = ans.substr(0 , ans.size() - 1);
+    }
+    cout << s.size() - ans.size() << ln;
+    cout << ans << ln;
 }
 int main(){
     ios::sync_with_stdio(false);

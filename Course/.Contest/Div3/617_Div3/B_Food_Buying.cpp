@@ -18,44 +18,41 @@ int MOD = 1e9 + 7;
 const int N  = 2e5 + 10;
 //always check input!!!
 
+ll power(int n , int t){
+    ll r = 1;
+    while(t-- > 0){
+        r *= n;
+    }
+    return r;
+}
 void solve()
 {
     int n;
     cin >> n;
-    int a[n];
+    ll k = 0;
+    while(power(10 , k) <= n){
+        k++;
+        if(power(10 , k) > n){
+            k--;
+            break;
+        }
+    }
+    power(10 , k);
     ll ans = 0;
-    fo(i , n) cin >> a[i];
-    int cnt1 = 0 , cnt2 = 0;
-    fo(i , n){
-        if(a[i]%3 == 0){
-            ans++;
-        }
-        else if(a[i]%3 == 1){
-            cnt1++;
-        }
-        else{
-            cnt2++;
+    while(power(10 , k) > 1 && n - (power(10 , k) / 10 * 9) > 0){
+        ans += power(10 , k);
+        n -= (power(10 , k) / 10 * 9);
+        while(power(10 , k) / 10 * 9 > n){
+            k--;
         }
     }
-    int t = min(cnt1 , cnt2);
-    ans += t;
-    //cerr << t << ln;
-    cnt1 -= t;
-    cnt2 -= t;
-    int d1 = cnt1/3;
-    ans += d1;
-    cnt1 -= (d1 * 3);
-    while(cnt1 >= 3){
-        ans++;
-        cnt1 -= 3;
+    //cerr << k << ' ' << p << ' ' << ans << ' ' << n;
+    while(n - 10 >= 0){
+        n -= 10;
+        n ++;
+        ans += 10;
     }
-    int d2 = cnt2/3;
-    ans += d2;
-    cnt2 -= (d2 * 3);
-    while(cnt2 >= 3){
-        ans++;
-        cnt2 -= 3;
-    }
+    ans += n;
     cout << ans << ln;
 }
 int main(){

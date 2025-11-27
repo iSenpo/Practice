@@ -22,48 +22,30 @@ void solve()
 {
     int n;
     cin >> n;
-    int a[n];
-    ll ans = 0;
-    fo(i , n) cin >> a[i];
-    int cnt1 = 0 , cnt2 = 0;
+    string s;
+    cin >> s;
+    int a[9];
+    fo(i , 9) cin >> a[i];
     fo(i , n){
-        if(a[i]%3 == 0){
-            ans++;
-        }
-        else if(a[i]%3 == 1){
-            cnt1++;
-        }
-        else{
-            cnt2++;
+        if(a[s[i] - '1'] + '0' > s[i]){
+            while(a[s[i]- '1'] + '0' >= s[i]){
+                s[i] = a[s[i] - '1'] + '0';
+                i++;
+                if(i == n){
+                    break;
+                }
+            }
+            break;
         }
     }
-    int t = min(cnt1 , cnt2);
-    ans += t;
-    //cerr << t << ln;
-    cnt1 -= t;
-    cnt2 -= t;
-    int d1 = cnt1/3;
-    ans += d1;
-    cnt1 -= (d1 * 3);
-    while(cnt1 >= 3){
-        ans++;
-        cnt1 -= 3;
-    }
-    int d2 = cnt2/3;
-    ans += d2;
-    cnt2 -= (d2 * 3);
-    while(cnt2 >= 3){
-        ans++;
-        cnt2 -= 3;
-    }
-    cout << ans << ln;
+    cout << s <<ln;
 }
 int main(){
     ios::sync_with_stdio(false);
     cin.tie(NULL);
     /*------------------------------------*/
     int t = 1;
-    cin >> t;
+    //cin >> t;
     while(t--){
         solve();
     }

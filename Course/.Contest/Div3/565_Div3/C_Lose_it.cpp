@@ -18,36 +18,77 @@ int MOD = 1e9 + 7;
 const int N  = 2e5 + 10;
 //always check input!!!
 
+
 void solve()
 {
     int n;
     cin >> n;
-    int m = n/6;
-    int a[n];
-    vector<vector<int>> need(m ,vector<int>({4, 8, 15, 16, 23, 42 , 0}));
-    vector<int> k(m , 0);
-    fo(i , n){
-        cin >> a[i];
-        fo(j , m){
-            if(a[i] == need[j][k[j]]){
-                k[j]++;
-                break;
+    int k = n/6;
+    vector<int> a(n);
+    fo(i , n) cin >> a[i];
+    map<int , int> ptr;
+    ll ans = 0;
+    ptr[4] = 0;
+    ptr[8] = 0;
+    ptr[15] = 0;
+    ptr[16] = 0;
+    ptr[23] = 0;
+    ptr[42] = 0;
+    for(int i = 0 ; i < n ; i++){
+        if(a[i] == 4){
+            ptr[a[i]]++;
+        }
+        else if(a[i] == 8){
+            if(ptr[4] > ptr[8]){
+                ptr[8]++;
+            }
+            else{
+                ans++;
             }
         }
-    }
-    ll ans = 0;
-    fo(i , m){
-        if(k[i] == 0){
-            ans += 6;
-            n -= 6;
+        else if(a[i] == 15){
+            if(ptr[8] > ptr[15]){
+                ptr[15]++;
+            }
+            else{
+                ans++;
+            }
+        }
+        else if(a[i] == 16){
+            if(ptr[15] > ptr[16]){
+                ptr[16]++;
+            }
+            else{
+                ans++;
+            }
+        }
+        else if(a[i] == 23){
+            if(ptr[16] > ptr[23]){
+                ptr[23]++;
+            }
+            else{
+                ans++;
+            }
+        }
+        else if(a[i] == 42){
+            if(ptr[23] > ptr[42]){
+                ptr[42]++;
+            }
+            else{
+                ans++;
+            }
         }
         else{
-            ans += k[i]%6;
-            n -= k[i]%6;
+            ans++;
         }
     }
-
-    cout << ans + n%6 << ln;
+    ans += abs(ptr[4] - ptr[42]);
+    ans += abs(ptr[8] - ptr[42]);
+    ans += abs(ptr[15] - ptr[42]);
+    ans += abs(ptr[16] - ptr[42]);
+    ans += abs(ptr[23] - ptr[42]);
+    
+    cout << ans << ln;
 }
 int main(){
     ios::sync_with_stdio(false);

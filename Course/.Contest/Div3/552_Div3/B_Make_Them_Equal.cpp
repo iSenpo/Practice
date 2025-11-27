@@ -22,34 +22,41 @@ void solve()
 {
     int n;
     cin >> n;
-    int a[n];
-    unordered_set<int> st , st2;
-    int diff;
-    fo(i , n) cin >> a[i];
-    sort(a , a + n);
-    int Max = 0;
-    fo( i , n - 1){
-        st2.insert(a[i]);
-        diff = a[i + 1] - a[i];
-        st.insert(diff);
-        if(diff != 0){
-            Max = diff;
-        }
+    set<int> st;
+    int x;
+    fo(i , n){
+        cin >> x;
+        st.insert(x);
+    } 
+    if(st.size() == 1){
+        cout << 0 << ln;
+        return;
     }
-    st2.insert(a[n -1]);
-    if(st2.size() <= 2){
-        if(a[0]%2 == a[n - 1]%2){
-            cout << (a[n - 1] - a[0])/2 << ln;
-            return;
+    else if(st.size() == 2){
+        vector<int> v(all(st));
+        sort(all(v));
+        if((v[1] - v[0])%2 == 0){
+            cout << abs(v[1] - v[0])/2 << ln;
         }
+        else{
+            cout << abs(v[1] - v[0]) << ln;
+        }
+        return;
     }
-    if(st.size() > 2){
+    else if(st.size() > 3){
         cout << -1 << ln;
+        return;
     }
     else{
-        cout << Max << ln;
+        vector<int> v(all(st));
+        sort(all(v));
+        if(v[2] - v[1] == v[1] - v[0]){
+            cout << abs(v[1] - v[0]) << ln;
+        }
+        else{
+            cout << -1 << ln;
+        }
     }
-
 }
 int main(){
     ios::sync_with_stdio(false);

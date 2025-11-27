@@ -23,36 +23,39 @@ void solve()
     int n;
     cin >> n;
     int a[n];
-    fo(i , n) cin >> a[i];
-    int ptr = 0;
-    int ptl = 0;
-    int prev = 0;
+    deque<int> q;
+    fo(i , n){
+        cin >> a[i];
+        q.push_back(a[i]);
+    }
     string ans;
-    while(ptl + ptr < n){
-        if(a[ptl] < a[n - 1 - ptr] && a[ptl] > prev){
-            ans += 'L';
-            prev = a[ptl];
-            ptl++;
+    int last = 0;
+    fo(i , n){
+        int x = q.front();
+        int y = q.back();
+        if(x < y && x > last){
+            q.pop_front();
+            ans += 'L'; 
+            last = x;
         }
-        else if(a[n - 1 - ptr] < a[ptl] && a[n - 1 - ptr] > prev){
+        else if(x > y && y > last){
+            q.pop_back();
             ans += 'R';
-            prev = a[n - 1 - ptr];
-            ptr++;
+            last = y;
         }
-        else if(a[ptl] > prev){
-            ans += 'L';
-            prev = a[ptl];
-            ptl++;
+        else if(x > last){
+            q.pop_front();
+            ans += 'L'; 
+            last = x;
         }
-        else if(a[n - 1 - ptr] > prev){
+        else if(y > last){
+            q.pop_back();
             ans += 'R';
-            prev = a[n - 1 - ptr];
-            ptr++;
+            last = y;
         }
         else{
             break;
         }
-
     }
     cout << sz(ans) << ln << ans << ln;
 }

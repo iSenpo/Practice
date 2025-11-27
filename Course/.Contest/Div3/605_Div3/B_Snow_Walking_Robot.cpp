@@ -20,43 +20,54 @@ const int N  = 2e5 + 10;
 
 void solve()
 {
-    int n;
-    cin >> n;
-    int a[n];
-    ll ans = 0;
-    fo(i , n) cin >> a[i];
-    int cnt1 = 0 , cnt2 = 0;
+    string s;
+    cin >> s;
+    int n = sz(s);
+    int r = 0 , l = 0 , u = 0 , d = 0;
     fo(i , n){
-        if(a[i]%3 == 0){
-            ans++;
+        if(s[i] == 'L'){
+            l++;
         }
-        else if(a[i]%3 == 1){
-            cnt1++;
+        if(s[i] == 'R'){
+            r++;
         }
-        else{
-            cnt2++;
+        if(s[i] == 'U'){
+            u++;
+        }
+        if(s[i] == 'D'){
+            d++;
         }
     }
-    int t = min(cnt1 , cnt2);
-    ans += t;
-    //cerr << t << ln;
-    cnt1 -= t;
-    cnt2 -= t;
-    int d1 = cnt1/3;
-    ans += d1;
-    cnt1 -= (d1 * 3);
-    while(cnt1 >= 3){
-        ans++;
-        cnt1 -= 3;
+    u = min(u , d);
+    d = min(u , d);
+    r = min(r , l);
+    l = min(r , l);
+    if((d == 0) && (r == 0)){
+        cout << 0 << ln;
+        return;
     }
-    int d2 = cnt2/3;
-    ans += d2;
-    cnt2 -= (d2 * 3);
-    while(cnt2 >= 3){
-        ans++;
-        cnt2 -= 3;
+    if(u == 0){
+        cout << 2 << ln << "RL" << ln;
+        return;
     }
-    cout << ans << ln;
+    if(r == 0){
+        cout << 2 << ln <<  "UD" << ln;
+        return;
+    }
+    cout << u + r + d + l << ln;
+    while(u--){
+        cout << 'U';
+    }
+    while(r--){
+        cout << 'R';
+    }
+    while(d--){
+        cout << 'D';
+    }
+    while(l--){
+        cout << 'L';
+    }
+    cout << ln;
 }
 int main(){
     ios::sync_with_stdio(false);
