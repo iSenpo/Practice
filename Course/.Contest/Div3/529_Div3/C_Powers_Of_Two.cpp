@@ -18,88 +18,65 @@ int MOD = 1e9 + 7;
 const int N  = 2e5 + 10;
 //always check input!!!
 
-bool pow2(int n){
-    ll i = 0;
-    ll j;
-    while(i < 31){
-        j = (1 << i);
-        if(j == n){
-            return true;
-        }
-        i++;
-    }
-    return false;
-}
-ll minK(int n){
-    ll q = 0;
-    ll j;
-    for(int i = 30 ; i >= 0 ; --i){
-        j = 1 << i;
-        while(n >= j){
-            n -= j;
-            q++;
+void ispow2(ll n){
+    for(int i = 30 ; i >= 0 ; i--){
+        ll j = (1 << i);
+        if((n - j) == 0){
+            cout << "YES\n" << j << ln;
+            return;
         }
     }
-    return q;
+    cout << "NO\n";
+    exit(0);
 }
 void solve()
 {
-    int n , k ; 
+    ll n , k;
     cin >> n >> k;
     if(k > n){
         cout << "NO\n";
         return;
     }
-    if(k == 1 && !pow2(n)){
-        cout << "NO\n";
-        return;
+    if(k == 1){
+        ispow2(n);
     }
-    if(k < minK(n)){
-        cout << "NO\n";
-        return;
-    }
-    cout << "YES\n";
-    vector<int> a;
-    ll j;
-    for(int i = 30 ; i >= 0 ; --i){
-        j = 1 << i;
-        while(n >= j){
-            n -= j;
-            a.pb(j);
-            k--;
+    else{
+        ll t = n;
+        map<ll , ll> cnt;
+        for(int i = 30 ; i >= 0 ; i--){
+            ll j = (1 << i);
+            if((ll)t - j >= 0){
+                t -= j;
+                cnt[i]++;
+                k--;
+            }
         }
-        if(n == 0){
-            break;
+        for(int i = 30 ; i >= 0 ; i--){
+            if(k > 0 && cnt[i] > 0){
+                ll m = min(k , cnt[i]);
+                k -= m;
+                cnt[i] -= m;
+                cnt[i - 1] += (m * 2);
+            }
         }
-    }
-    sort(all(a));
-    queue<int> q;
-    int ptr = 0;
-    if(k == 0){
-        for(int i : a){
+        if(k < 0){
+            cout << "NO\n";
+            return;
+        }
+        vector<ll> ans;
+        for(int i = 30 ; i >= 0 ; i--){
+            ll j = (1 << i);
+            while(cnt[i] > 0){
+                ans.push_back(j);
+                cnt[i]--;
+            }
+        }
+        sort(all(ans));
+        cout << "YES\n";
+        for(int i : ans){
             cout << i << ' ';
         }
-    }
-    while(k > 0){
-        if(a[ptr] == 1){
-            q.push(a[ptr]);
-            ptr++;
-        }
-        bool ck = 0;
-        while(a[ptr] != 1 && k > 0){
-            a[ptr] /= 2;
-            q.push(a[ptr]);
-            q.push(a[ptr]);
-            k--;
-            ck = 1;
-        }
-        if(ck){
-            ptr++;
-        }
-    }
-    for(int i = 0 ; i < q.size() ; i++){
-        cout << q.front() << ' ';
-        q.pop();
+        cout << ln;
     }
 }
 int main(){

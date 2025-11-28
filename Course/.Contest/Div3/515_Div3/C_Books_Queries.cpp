@@ -20,22 +20,36 @@ const int N  = 2e5 + 10;
 
 void solve()
 {
-    int n , m;
-    cin >> n >> m;
-    string s;
-    cin >> s;
-    int k = 0;
-    string t = s;
-    for(int i = 1 ; i < n ; i++){
-        if(s.substr(0 , i) == s.substr(n - i , i)){
-            k = max(k , i);
+    int n;
+    cin >> n;
+    deque<int> q;
+    map<int , pair<int , char>> cnt;
+    q.push_back(0);
+    while(n--){
+        char c;
+        int a;
+        cin >> c >> a;
+        if(c == 'L'){
+            int x = q.front() + 1;
+            q.push_front(x);
+            cnt[a] = {x , 'L'}; 
+        }
+        else if(c == 'R'){
+            int x = q.back() + 1;
+            q.push_back(x);
+            cnt[a] = {x , 'R'};
+        }
+        else{
+            int r = q.back();
+            int l = q.front();
+            if(cnt[a].second == 'L'){
+                cout << min(l - cnt[a].first , cnt[a].first + r - 1) << ln;
+            }
+            else{
+                cout << min(r - cnt[a].first , l + cnt[a].first - 1) << ln;
+            }
         }
     }
-    t = s.substr(k , n - k);
-    fo(i , m-1){
-        s += t;
-    }
-    cout << s << ln;
 }
 int main(){
     ios::sync_with_stdio(false);
