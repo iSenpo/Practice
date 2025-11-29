@@ -20,39 +20,36 @@ const int N  = 2e5 + 10;
 
 void solve()
 {
-    int n , k;
-    cin >> n >> k;
+    int n , m;
+    cin >> n >> m;
+    if(n == 0 && m == 0){
+        exit(0);
+    }
     int a[n];
-    int Max = 0;
-    fo(i , n){
-        cin >> a[i];
-        Max = max(Max , a[i]);
-    }    
-    int Min = N;
+    fo(i , n) cin >> a[i];
+    int b[m];
+    fo(i , m) cin >> b[i];
+    ll sum = 0;
     sort(a , a + n);
-    for(int i = 0 ; i <= Max ; i++){
-        vector<int> valid;
-        fo(j , n){
-            int curr = 0;
-            int t = a[j];
-            while(t > i){
-                t /= 2;
-                curr++;
-            }
-            if(t == i){
-                valid.push_back(curr);
+    sort(b , b + m);
+    int last = 0;
+    fo(i , n){
+        bool check = true;
+        //cerr << last << ln;
+        for(int j = last ; j < m ; j++){
+            if(b[j] >= a[i]){
+                sum += b[j];
+                last = j + 1;
+                check = false;
+                break;
             }
         }
-        if(valid.size() >= k){
-        sort(all(valid));
-            int sum = 0;
-            fo(v , k){
-                sum += valid[v];
-            }
-            Min = min(Min , sum);
+        if(check){
+            cout << "Impossible\n";
+            return;
         }
     }
-    cout << Min << ln;
+    cout << sum << ln;
 }
 int main(){
     ios::sync_with_stdio(false);
@@ -60,7 +57,7 @@ int main(){
     /*------------------------------------*/
     int t = 1;
     //cin >> t;
-    while(t--){
+    while(1){
         solve();
     }
     return 0;

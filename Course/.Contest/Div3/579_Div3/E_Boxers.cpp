@@ -20,39 +20,47 @@ const int N  = 2e5 + 10;
 
 void solve()
 {
-    int n , k;
-    cin >> n >> k;
-    int a[n];
-    int Max = 0;
-    fo(i , n){
-        cin >> a[i];
-        Max = max(Max , a[i]);
-    }    
-    int Min = N;
+    int n;
+    cin >> n;
+    map<int , bool> g;
+    int a[n]; 
+    fo(i , n) cin >> a[i];
     sort(a , a + n);
-    for(int i = 0 ; i <= Max ; i++){
-        vector<int> valid;
-        fo(j , n){
-            int curr = 0;
-            int t = a[j];
-            while(t > i){
-                t /= 2;
-                curr++;
+    ll ans = 0;
+    fo(i , n){
+        if(a[i] == 1){
+            if(g[a[i]]){
+                if(!g[a[i] + 1]){
+                    g[a[i] + 1] = true;
+                    ans++;
+                }
             }
-            if(t == i){
-                valid.push_back(curr);
+            else{
+                g[a[i]] = true;
+                ans++;
             }
         }
-        if(valid.size() >= k){
-        sort(all(valid));
-            int sum = 0;
-            fo(v , k){
-                sum += valid[v];
+        else{
+            if(!g[a[i] - 1]){
+                ans++;
+                g[a[i] - 1] = true;
             }
-            Min = min(Min , sum);
+            else{
+                if(!g[a[i]]){
+                    g[a[i]] = true;
+                    ans++;
+                }
+                else if(!g[a[i] + 1]){
+                    g[a[i] + 1] = true;
+                    ans++;
+                }
+                else{
+                    continue;
+                }
+            }
         }
     }
-    cout << Min << ln;
+    cout << ans << ln;
 }
 int main(){
     ios::sync_with_stdio(false);

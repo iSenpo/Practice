@@ -20,46 +20,35 @@ const int N  = 2e5 + 10;
 
 void solve()
 {
-    int n , k;
-    cin >> n >> k;
+    int n;
+    cin >> n;
     int a[n];
+    set<int> st;
     int Max = 0;
     fo(i , n){
         cin >> a[i];
-        Max = max(Max , a[i]);
-    }    
-    int Min = N;
-    sort(a , a + n);
-    for(int i = 0 ; i <= Max ; i++){
-        vector<int> valid;
-        fo(j , n){
-            int curr = 0;
-            int t = a[j];
-            while(t > i){
-                t /= 2;
-                curr++;
-            }
-            if(t == i){
-                valid.push_back(curr);
-            }
-        }
-        if(valid.size() >= k){
-        sort(all(valid));
-            int sum = 0;
-            fo(v , k){
-                sum += valid[v];
-            }
-            Min = min(Min , sum);
+        st.insert(a[i]);
+        Max = max(a[i] , Max);
+    }
+    vector<int> v(all(st));
+    if(st.size() == 1){
+        cout << "YES\n";
+        return;
+    }
+    for(int i = 0 ; i < v.size(); i++){
+        if((Max - v[i])%2 != 0){
+            cout << "NO\n";
+            return;
         }
     }
-    cout << Min << ln;
+    cout << "YES\n";
 }
 int main(){
     ios::sync_with_stdio(false);
     cin.tie(NULL);
     /*------------------------------------*/
     int t = 1;
-    //cin >> t;
+    cin >> t;
     while(t--){
         solve();
     }

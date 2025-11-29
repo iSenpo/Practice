@@ -52,14 +52,9 @@ void solve()
         for(int i = k - 1 ; i >= 1 ; i--){
             ll Max = (a[i - 1] * 2) - a[i];
             ll v = min(n , Max);
+            v = max(v , 0LL);
             n -= v;
             a[i] += v;
-        }
-        if(n > 0){
-            ll Max = (a[1] - 1) - a[0];
-            ll v = min(n , Max);
-            n -= v;
-            a[0] += v;
         }
     }
     if(n > 0){
