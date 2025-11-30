@@ -11,35 +11,32 @@ using namespace std;
 
 // 48-57 -> 0-9  65-90 -> A-Z 97-122 -> a-z
 
-const int dx[8] = {1, 0, -1, 0, 1, 1, -1, -1};
-const int dy[8] = {0, 1, 0, -1, -1, 1, -1, 1};
-int MOD = 1e9 + 7;
 
-const int N  = 2e5 + 10;
-//always check input!!!
 
 void solve()
 {
-    int n;
-    cin >> n;
-    string ans = "";
-    if(n%2 == 1){
-        ans += "v";
-        n--;
+    int n , k;
+    cin >> n >> k;
+    string ans;
+    fo(i , n) ans += 'a';
+    int cnt = 0;
+    int s = 1;
+    int d = 0;
+    while(s + d< k){
+        d++;
+        s += d;
     }
-    int d = n/2;
-    fo(i , d){
-        ans.push_back('w');
-    }
+    ans[n - 2 - d] = 'b';
+    ans[n - 1 - k + s] = 'b';
+    //cerr << s << ' ' << d << ln;
     cout << ans << ln;
-    
 }
 int main(){
     ios::sync_with_stdio(false);
     cin.tie(NULL);
     /*------------------------------------*/
     int t = 1;
-    //cin >> t;
+    cin >> t;
     while(t--){
         solve();
     }

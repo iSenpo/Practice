@@ -20,44 +20,20 @@ const int N  = 2e5 + 10;
 
 void solve()
 {
-    int n , m;
-    cin >> n >> m;
-    if(n == 0 && m == 0){
-        exit(0);
-    }
-    int a[n];
-    fo(i , n) cin >> a[i];
-    int b[m];
-    fo(i , m) cin >> b[i];
-    ll sum = 0;
-    sort(a , a + n);
-    sort(b , b + m);
-    int last = 0;
-    fo(i , n){
-        bool check = true;
-        //cerr << last << ln;
-        for(int j = last ; j < m ; j++){
-            if(b[j] >= a[i]){
-                sum += b[j];
-                last = j + 1;
-                check = false;
-                break;
-            }
-        }
-        if(check){
-            cout << "Impossible\n";
-            return;
-        }
-    }
-    cout << sum << ln;
+    int n;
+    cin >> n;
+    int y , r;
+    cin >> y >> r;
+    int ans = (y/2) + r;
+    cout << min(ans , n) << ln;
 }
 int main(){
     ios::sync_with_stdio(false);
     cin.tie(NULL);
     /*------------------------------------*/
     int t = 1;
-    //cin >> t;
-    while(1){
+    cin >> t;
+    while(t--){
         solve();
     }
     return 0;

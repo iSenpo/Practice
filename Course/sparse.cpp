@@ -15,8 +15,8 @@ int main(){
         }
     }
     int sparse[cnt + 1][3];
-    sparse[0][0] = n;
-    sparse[0][1] = m;
+    sparse[0][0] = n + 1;
+    sparse[0][1] = m + 1;
     sparse[0][2] = cnt;
     int k = 1;
     for(int i = 0 ; i < n ; i++){
@@ -30,8 +30,8 @@ int main(){
         }
     }
     for(int i = 0 ; i <= cnt ; i++){
-        cout << sparse[i][0] << ' ';
-        cout << sparse[i][1] << ' ';
+        cout << sparse[i][0] - 1 << ' ';
+        cout << sparse[i][1] - 1 << ' ';
         cout << sparse[i][2] << '\n';
     }
 }
