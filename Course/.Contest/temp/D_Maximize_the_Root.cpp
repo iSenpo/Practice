@@ -14,19 +14,56 @@ using namespace std;
 const int dx[8] = {1, 0, -1, 0, 1, 1, -1, -1};
 const int dy[8] = {0, 1, 0, -1, -1, 1, -1, 1};
 int MOD = 1e9 + 7;
-const int N  = 2e5 + 10;
+const int N  = 2e5 + 200;
 const int INF = 2e9 + 100;
 const int MIN = -2e9 - 100;
 //always check input!!!
 
+int a[N];
+vector<int> adj[N];
+int dp[N];
+
+void dfs(int v){
+    if(!adj[v].size()){
+        dp[v] = a[v];
+        return;
+    }
+    int Max = INF;
+    for(int i : adj[v]){
+        dfs(i);
+        Max = min(Max , dp[i]);
+    }
+    if(Max < a[v]){
+        dp[v] = Max; 
+    }
+    else{
+        dp[v] = (Max + a[v])/2;
+    }
+}
 void solve()
 {
-    
+    int n;
+    cin >> n;
+    for(int i = 1 ; i <= n ; i++){
+        cin >> a[i];
+        adj[i].clear();
+    }
+    for(int i = 2 ; i <= n ; i++){
+        int v;
+        cin >> v;
+        adj[v].push_back(i);
+    }
+    int Max = INF;
+    for(int i : adj[1]){
+        dfs(i);
+        Max = min(Max , dp[i]);
+    }
+    cout << a[1] + Max << ln;
 }
 int main(){
     ios::sync_with_stdio(false); cin.tie(NULL);
     int t = 1;
-    //cin >> t;
+    cin >> t;
     while(t--){
         solve();
     }

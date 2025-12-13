@@ -20,31 +20,42 @@ const int N  = 2e5 + 10;
 
 void solve()
 {
-    int n , k;
-    cin >> n >> k;
-    string s;
-    cin >> s;
-    int d = 0;
-    int res = N;
-    while(d < k){
-        int ans = 0;
-        fo(i , n){
-            if((i + d)%k == 0){
-                if(s[i] != '1'){
-                    ans++;
-                }
-            }
-            else{
-                if(s[i] == '1'){
-                    ans++;
-                }
-            }
+    int n , a , b;
+    cin >> n >> a >> b;
+    int d = abs(a - b);
+    int ans = 1;
+    for(int i = 1 ; i <= max(a , b) ; i++){
+        if(a%i == b%i && (d / i) < n){
+            ans = i;
+            break;
         }
-        cerr << ans << ' ' << d << ln;
-        res = min(res , ans);
-        d++;
     }
-    cout << res << ln;
+    vector<int> num;
+    num.push_back(a);
+    num.push_back(b);
+    int cnt = 2;
+    int temp = a;
+    while(temp + ans < b && cnt < n){
+        temp += ans;
+        num.push_back(temp);
+        cnt++;
+    }
+    temp = a;
+    while(temp - ans >= 1 && cnt < n){
+        temp -= ans;
+        num.push_back(temp); 
+        cnt++;
+    }
+    temp = b;
+    while(cnt < n){
+        temp += ans;
+        num.push_back(temp);
+        cnt++;
+    }
+    for(int i : num){
+        cout << i << ' ';
+    }
+    cout << ln;
 }
 int main(){
     ios::sync_with_stdio(false);

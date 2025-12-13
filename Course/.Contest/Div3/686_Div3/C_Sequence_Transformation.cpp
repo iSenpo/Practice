@@ -15,39 +15,41 @@ const int dx[8] = {1, 0, -1, 0, 1, 1, -1, -1};
 const int dy[8] = {0, 1, 0, -1, -1, 1, -1, 1};
 int MOD = 1e9 + 7;
 
-const int N  = 2e5 + 10;
+const int N  = 2e9 + 90;
 //always check input!!!
-ll cost(string s ,char ch){
-    int n = sz(s);
-    if(n == 1){
-        if(s[0] == ch){
-            return 0;
-        }
-        else{
-            return 1;
-        }
-    }
-    string p1 = s.substr(0 , n/2);
-    string p2 = s.substr(n/2 , n/2);
-    int cnt1 = 0;
-    int cnt2 = 0;
-    fo(i , n/2){
-        if(p1[i] != ch){
-            cnt1++;
-        }
-        if(p2[i] != ch){
-            cnt2++;
-        }
-    }
-    return min(cnt1 + cost(p2 , ch + 1) , cnt2 + cost(p1 , ch + 1));
-}
+
 void solve()
 {
     int n;
     cin >> n;
-    string s;
-    cin >> s;
-    cout << cost(s , 'a') << ln;
+    int a[n];
+    map<int , int> cnt;
+    fo(i , n){
+        cin >> a[i];
+        cnt[a[i]]++;
+    }
+    fo(i , n - 1){
+        if(a[i] == a[i + 1]){
+            cnt[a[i]]--;
+        }
+    }
+    set<int> st;
+    fo(i , n){
+        st.insert(a[i]);
+    }
+    vector<int> v(all(st));
+    int ans = N;
+    for(int i : v){
+        int j = cnt[i] + 1;
+        if(a[0] == i){
+            j--;
+        }
+        if(a[n - 1] == i){
+            j--;
+        }
+        ans = min(ans , j);
+    }
+    cout << ans << ln;
 }
 int main(){
     ios::sync_with_stdio(false);
