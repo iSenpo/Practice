@@ -21,12 +21,25 @@ const int MIN = -2e9 - 100;
 
 void solve()
 {
-    
+    int n;
+    cin >> n;
+    int a[n];
+    fo(i , n) cin >> a[i];
+    fo(i , n){
+        if(a[i]%2 == 0){
+            a[i] += 10;
+        }
+        else{
+            a[i] = a[i]%10;
+        }
+    }
+    fo(i , n) cout << a[i] << ' ';
+    cout << ln;
 }
 int main(){
     ios::sync_with_stdio(false); cin.tie(NULL);
     int t = 1;
-    //cin >> t;
+    cin >> t;
     while(t--){
         solve();
     }

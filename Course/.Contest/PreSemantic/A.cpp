@@ -21,7 +21,15 @@ const int MIN = -2e9 - 100;
 
 void solve()
 {
-    
+    ll n;
+    cin >> n;
+    long double a[n];
+    fo(i , n) cin >> a[i];
+    long double sum = 0;
+    fo(i , n) sum += a[i];
+    sum /= n;
+    set_dec(12);
+    cout << sum << ln;
 }
 int main(){
     ios::sync_with_stdio(false); cin.tie(NULL);

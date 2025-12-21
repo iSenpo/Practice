@@ -21,12 +21,28 @@ const int MIN = -2e9 - 100;
 
 void solve()
 {
-    
+    ll n;
+    cin >> n;
+    ll a[n];
+    fo(i , n) cin >> a[i];
+    ll cnt = 0;
+    for(int i = 0 ; i < n - 1; i++){
+        if(a[i + 1] < a[i]){
+            cnt++;
+            while(i < n && a[i] >= a[i + 1]){
+                i++;
+            }
+        }
+    }
+    if(a[n - 1] > a[n - 2]){
+        cnt++;
+    }
+    cout << max(cnt , 1LL) << ln;
 }
 int main(){
     ios::sync_with_stdio(false); cin.tie(NULL);
     int t = 1;
-    //cin >> t;
+    cin >> t;
     while(t--){
         solve();
     }

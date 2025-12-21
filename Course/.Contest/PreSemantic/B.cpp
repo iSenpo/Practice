@@ -21,12 +21,29 @@ const int MIN = -2e9 - 100;
 
 void solve()
 {
-    
+    int n;
+    cin >> n;
+    string s;
+    cin >> s;
+    string ans = "";
+    char target = '1';
+    fo(i , n){
+        if(s[i] == target){
+            ans += s[i];
+            target = '1';
+        }
+        else if(target == '1'){
+            target = s[i];
+        }
+    }
+    if(target != '1'){
+        ans += target;
+    }
+    cout << ans << ln;
 }
 int main(){
-    ios::sync_with_stdio(false); cin.tie(NULL);
     int t = 1;
-    //cin >> t;
+    cin >> t;
     while(t--){
         solve();
     }
