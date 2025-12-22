@@ -23,34 +23,33 @@ void solve()
 {
     int n;
     cin >> n;
-    string s[2];
-    cin >> s[0] >> s[1];
-    int ptr = 0;
-    for(int i = 0 ; i < n ; i++){
-        if(s[ptr][i] == '1' || s[ptr][i] == '2'){
-            continue;
+    int a[n];
+    fo(i , n) cin >> a[i];
+    int Max = 0;
+    vector<int> dp1(n , 1) , dp2(n , 1);
+    for(int i = 1 ; i < n ; i++){
+        if(a[i] > a[i - 1]){
+            dp1[i] += dp1[i - 1];  
         }
-        else{
-            if(s[1 - ptr][i] == '1' || s[1 - ptr][i] == '2'){
-                cout << "NO\n";
-                return;
-            }
-            else{
-                ptr = 1 - ptr;
-            }
+        Max = max(Max , dp1[i]);
+    }
+    for(int i = n - 2 ; i >= 0 ; i--){
+        if(a[i] < a[i + 1]){
+            dp2[i] += dp2[i + 1];
+        }
+        Max = max(Max , dp1[i]);
+    }
+    for(int i = 1 ; i < n - 1 ; i++){
+        if(a[i - 1] < a[i + 1]){
+            Max = max(Max , dp1[i - 1] + dp2[i + 1]);
         }
     }
-    if(ptr == 1){
-        cout << "YES\n";
-    }
-    else{
-        cout << "NO\n";
-    }
-}   
+    cout << Max << ln;
+}
 int main(){
     ios::sync_with_stdio(false); cin.tie(NULL);
     int t = 1;
-    cin >> t;
+    //cin >> t;
     while(t--){
         solve();
     }

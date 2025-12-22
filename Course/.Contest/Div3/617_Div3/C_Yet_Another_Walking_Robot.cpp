@@ -2,70 +2,62 @@
 using namespace std;
 #define ll long long
 #define pii pair<int , int>
+#define pll pair<ll , ll>
 #define ln '\n'
 #define fo(i, n) for(int i = 0 ; i < n ; ++i)
 #define all(x) (x).begin(),(x).end()
+#define rall(x) (x).rbegin(),(x).rend()
 #define sz(x) (int)(x).size()
 #define pb(x) push_back(x)
-#define mt(x , y , z) make_tuple(x , y , z)
-
+#define	set_dec(x) cout << fixed << setprecision(x);
 // 48-57 -> 0-9  65-90 -> A-Z 97-122 -> a-z
-
 const int dx[8] = {1, 0, -1, 0, 1, 1, -1, -1};
 const int dy[8] = {0, 1, 0, -1, -1, 1, -1, 1};
 int MOD = 1e9 + 7;
-
-const int N  = 1e9;
+const int N  = 2e5 + 10;
+const int INF = 2e9 + 100;
+const int MIN = -2e9 - 100;
 //always check input!!!
+
 
 void solve()
 {
-    int n;
-    cin >> n;
-    string s;
-    cin >> s;
-    s = "0" + s;
-    int Min = N;
-    pii base = {0 , 0};
-    pii ans;
-    int dx = 0 , dy = 0;
-    map<pii , int> ind;
-    map<char , int> cnt;
-    for(int i = 1 ; i <= n ; i++){
-        if(s[i] == 'D'){
-            dy--;
+    int n; cin >> n;
+    string s; cin >> s;
+    pii c = {0 , 0} , ans = {0 , 0};
+    map<pii , int> dp;
+    dp[{0 , 0}] = 1;
+    int Max = INF;
+    fo(i , n){
+        if(s[i] == 'L'){
+            c.first--;
         }
-        if(s[i] == 'U')
-            dy++;
-        if(s[i] == 'R')
-            dx++;
-        if(s[i] == 'L')
-            dx--;
-            
-        base.first += dx;
-        base.second += dy;
-        if(ind[base] != 0){
-            if(i - ind[base] < Min){
-                Min = i - ind[base];
-                ans = {i + 1 , ind[base] + 1};
-                ind[base] = i;
+        else if(s[i] == 'R'){
+            c.first++;
+        }
+        else if(s[i] == 'U'){
+            c.second++;
+        }
+        else if(s[i] == 'D'){
+            c.second--;
+        }
+        if(dp[c]){
+            if((i + 2) - dp[c] < Max){
+                ans = {dp[c] , i + 1};
+                Max = (i + 2) - dp[c];
             }
         }
-        else{
-            ind[base] = i;
-        }
+        dp[c] = i + 2;
     }
-    if(Min == N){
-        cout << -1 << ln;
+    if(Max != INF){
+        cout << ans.first << ' ' << ans.second << ln;
     }
     else{
-        cout << ans.first << ' ' << ans.second << ln;
+        cout << -1 << ln;
     }
 }
 int main(){
-    ios::sync_with_stdio(false);
-    cin.tie(NULL);
-    /*------------------------------------*/
+    ios::sync_with_stdio(false); cin.tie(NULL);
     int t = 1;
     cin >> t;
     while(t--){
@@ -73,5 +65,3 @@ int main(){
     }
     return 0;
 }
-//check long long memory limit
-//check int overflow
