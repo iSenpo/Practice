@@ -19,14 +19,14 @@ const int MIN = -2e9 - 100;
 //always check input!!!
 
 
-struct Data{
+struct tree{
     ll ans , pre , suf , sum;
-    Data(ll _ans , ll _pre , ll _suf , ll _sum):ans(_ans) , pre(_pre) , suf(_suf) , sum(_sum){}
-    Data(){}
+    tree(ll _ans , ll _pre , ll _suf , ll _sum):ans(_ans) , pre(_pre) , suf(_suf) , sum(_sum){}
+    tree(){}
     
 };
-Data merge(Data x , Data y){
-    return Data(
+tree merge(tree x , tree y){
+    return tree(
         max({x.ans , y.ans , x.suf + y.pre}) ,
         max(x.pre , x.sum + y.pre) ,
         max(y.suf , y.sum + x.suf) , 
@@ -35,11 +35,11 @@ Data merge(Data x , Data y){
 }
 int n , q ;
 ll a[N];
-Data seg[N * 4];
+tree seg[N * 4];
 
 void build(int l = 0 , int r = n , int id = 1){
     if(l + 1 == r){
-        seg[id] = Data(max(a[l] , 0LL) , max(a[l] , 0LL) , max(a[l] , 0LL) , a[l]);
+        seg[id] = tree(max(a[l] , 0LL) , max(a[l] , 0LL) , max(a[l] , 0LL) , a[l]);
         return;
     }
     build(l , mid , id * 2);
@@ -49,7 +49,7 @@ void build(int l = 0 , int r = n , int id = 1){
 }
 void update(int p , int x , int l = 0, int r = n , int id = 1){
     if(l + 1 == r){
-        seg[id] = Data(max(a[l] , 0LL) , max(a[l] , 0LL) , max(a[l] , 0LL) , a[l]);
+        seg[id] = tree(max(a[l] , 0LL) , max(a[l] , 0LL) , max(a[l] , 0LL) , a[l]);
         return;
     }
     if(p < mid){
@@ -60,7 +60,7 @@ void update(int p , int x , int l = 0, int r = n , int id = 1){
     }
     seg[id] = merge(seg[lid] , seg[rid]);
 }
-Data get(int s , int e , int l = 0 , int r = n , int id = 1){
+tree get(int s , int e , int l = 0 , int r = n , int id = 1){
     if(s <= l && r <= e){
         return seg[id];
     }

@@ -21,52 +21,40 @@ const int MIN = -2e9 - 100;
 
 void solve()
 {
-    ll n , k;
-    cin >> n >> k;
-    ll Min = 0;
-    vector<int> a(k , 0);
-    fo(i , k){
-        Min += (1 + i);
-        a[i] = (1 + i); 
+    string s;
+    cin >> s;
+    int n = sz(s);
+    int ans = 0;
+    int x = 0;
+    if(s[0] != 's'){
+        ans++;
+        s[0] = 's';
     }
-    if(Min > n){
-        cout << "NO\n";
-        return;
+    if(s[n - 1] != 's'){
+        ans++;
+        s[n - 1] = 's';
     }
-    int cnt = 0;
-    while(Min + k <= n){
-        Min += k;
-        cnt++;
-    }
-    fo(i , k){
-        a[i] += cnt;
-    }
-    int need = n - Min;
-    fo(i , 100){
-        if(!need)
-                break;
-        for(int i = k - 1 ; i >= 1 ; i--){
-            int t = min((a[i - 1] * 2) - a[i] , need);
-            a[i] += t;
-            need -= t;
-            if(!need)
-                break;
+    vector<int> ind;
+    fo(i , n){
+        if(s[i] == 's'){
+            ind.pb(i);
         }
     }
-    if(need == 0){
-        cout << "YES\n";
-        for(int i : a)
-            cout << i << ' ';
-        cout << ln;
+    for(int j = 0 ; j < ind.size() - 1 ; j++){
+        int cnt = 0;
+        for(int i = ind[j] + 1 ; i < ind[j + 1] ; i++){
+            cnt++;
+            if(cnt%2 == 0){
+                if(s[i] == 'u') ans++;
+            }
+        }
     }
-    else{
-        cout << "NO\n";
-    }
+    cout << ans << ln;
 }
 int main(){
     ios::sync_with_stdio(false); cin.tie(NULL);
     int t = 1;
-    //cin >> t;
+    cin >> t;
     while(t--){
         solve();
     }

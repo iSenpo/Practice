@@ -19,54 +19,39 @@ const int INF = 2e9 + 100;
 const int MIN = -2e9 - 100;
 //always check input!!!
 
+
 void solve()
 {
-    ll n , k;
-    cin >> n >> k;
-    ll Min = 0;
-    vector<int> a(k , 0);
-    fo(i , k){
-        Min += (1 + i);
-        a[i] = (1 + i); 
+    int n;
+    cin >> n;
+    ll a[n];
+    ll sum = 0;
+    fo(i , n){
+        cin >> a[i];
+        sum += a[i];
     }
-    if(Min > n){
-        cout << "NO\n";
-        return;
-    }
-    int cnt = 0;
-    while(Min + k <= n){
-        Min += k;
-        cnt++;
-    }
-    fo(i , k){
-        a[i] += cnt;
-    }
-    int need = n - Min;
-    fo(i , 100){
-        if(!need)
-                break;
-        for(int i = k - 1 ; i >= 1 ; i--){
-            int t = min((a[i - 1] * 2) - a[i] , need);
-            a[i] += t;
-            need -= t;
-            if(!need)
-                break;
+    ll ans = MIN;
+    ll pos = 0; 
+    for(int m = 1 ; m <= n ; m++){
+        ll plus;
+        if(m == 1){
+            plus = 0;
+        }
+        else {
+            plus = a[0] + pos;
+        }
+        ll x = (2 * (1LL) * plus) + a[m - 1] - sum;
+        ans = max(ans , x);
+        if(m >= 2){
+            pos += max(0LL , a[m - 1]);
         }
     }
-    if(need == 0){
-        cout << "YES\n";
-        for(int i : a)
-            cout << i << ' ';
-        cout << ln;
-    }
-    else{
-        cout << "NO\n";
-    }
+    cout << ans << ln;
 }
 int main(){
     ios::sync_with_stdio(false); cin.tie(NULL);
     int t = 1;
-    //cin >> t;
+    cin >> t;
     while(t--){
         solve();
     }
