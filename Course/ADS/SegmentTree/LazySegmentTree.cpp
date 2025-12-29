@@ -97,10 +97,25 @@ void update(int s , int e , int x , int l = 0 , int r = n , int id = 1){
 }
 int main(){
     ios::sync_with_stdio(false); cin.tie(NULL);
-    cin >> n;
+    int q;
+    cin >> n >> q;
     for(int i = 0 ; i < n ; i++)
         cin >> a[i];
 
     build();
+    while(q--){
+        int tp;
+        cin >> tp;
+        if(tp == 2){
+            int p;
+            cin >> p;
+            cout << get(p - 1 , p).sum << ln;
+        }
+        if(tp == 1){
+            int l , r , x;
+            cin >> l >> r >> x;
+            update(l - 1 , r , x);
+        }
+    }
     return 0;
 }
