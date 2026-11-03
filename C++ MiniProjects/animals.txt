@@ -1,0 +1,11 @@
+Lion 3 2018 1 0
+Tiger 7 2020 0 0
+Elephant 2 2015 1 0
+Bear 5 2019 0 0
+Zebra 9 2021 0 0
+Bear 5 2019 0 0
+Elephant 2 2015 1 0
+Elephant 8 2016 0 0
+Lion 3 2018 1 0
+Tiger 7 2020 0 0
+Zebra 9 2021 0 0
